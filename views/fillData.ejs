@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <script =text/javacript>
+            function myFunction() {
+            var image="<%= image %>";
+            document.getElementById("imageData").value=image
+            var employeeid = document.getElementById("employeeid").value;
+            submitOK = "true";
+            if (isNaN(employeeid)) {
+             alert("The employee should not be empty and it should be 5 digit number");
+             submitOK = "false";
+    }
+    if (submitOK == "false") {
+        return false;
+    }
+
+            
+            }
+            </script>
+</head>
+<body>
+        <div class="card">
+                <img src="<%= image %>" style="top:40px;border:4px solid black">
+                <form action="/enroll" method="post"  onsubmit="return myFunction()">
+                    <tr>
+                            <td>Employee Id:(Only 5 digits)</td>
+                            <td><input type="text" name="employeeid" type="number" id="employeeid" size="5" required/></td> 
+                            <input id="imageData" type="hidden" name="imageData" value=""/>
+                            <input type="submit"/>                     
+                   </tr>
+                </form>
+        </div>
+        <!-- <script =text/javacript>
+            function myFunction() {
+            var image="<%= image %>";
+            document.getElementById("imageData").value=image
+            var employeeid = document.getElementById("employeeid").value;
+            submitOK = "true";
+            if (isNaN(employeeid)) {
+             alert("The employee should not be empty and it should be 5 digit number");
+             submitOK = "false";
+    }
+    if (submitOK == "false") {
+        return false;
+    }
+
+            
+            }
+            </script> -->
+                
+</body>
+</html>
