@@ -47,9 +47,38 @@ app.get('/getdata',(req,res)=>{
 //     })
 // })
 
-app.get('/response',(req,res)=>{
+app.post('/response',(req,res)=>{
+    var img=JSON.stringify(req.body.imageData);
+    console.log(img);
+    console.log("response page");
+    var subjectid=JSON.stringify(req.body.employeeid);
+    console.log(subjectid)
+    detailsArray.employeeDetails.forEach((element) => {
+        if(element.employeeid == subjectid) {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+            today = dd + '/' + mm + '/' + yyyy;
+            console.log(element)
     console.log("response page")
-    res.render('response')
+    res.render('response', {
+        msg:'response page',
+        details:element,
+        date:today,
+        image:img
+    })
+}
+})
+})
+
+app.post('/fillData',(req,res)=>{
+    var img=JSON.stringify(req.body.imageData);
+    console.log("filldata page")
+    res.render("fillData",{
+        details:req.body,
+        image:img
+    })
 })
 
 // app.post('/welcomeCard',(req,res)=>{
@@ -93,9 +122,9 @@ app.post('/enroll',(req,res)=> {
                     var mm = today.getMonth()+1; //January is 0!
                     var yyyy = today.getFullYear();
                     today = dd + '/' + mm + '/' + yyyy;
-                    res.render('fillingConfirmation.ejs',{
-                        details:element
-
+                    res.render('fillingConfirmation',{
+                        details:element,
+                        image:img
                     })
          
         }
@@ -133,7 +162,7 @@ app.post('/upload', (req, res) => {
                 vis: 'visible'
             })
         } else if(body.images[0].transaction.message == 'no match found'){
-            res.render('FillData',{
+            res.render('fillData',{
                 msg: 'Face not recognized .Please fill the data',
                 vis: 'visible',
                 details:req.body,
@@ -153,7 +182,8 @@ app.post('/upload', (req, res) => {
                 today = dd + '/' + mm + '/' + yyyy;
                 // var img = new Buffer(data, 'base64');
                 res.render('welcomeCard',{
-                    details:element
+                    details:element,
+                    image:img
                 });
             }
         })
