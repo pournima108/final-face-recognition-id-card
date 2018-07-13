@@ -7,7 +7,7 @@
 <h1>Hello </h1>
 
 <h2 style="display:inline">ID: </h6><h6 style="display:inline"><%= details.employeeid%><h2>
-<img src="<%= image %>" style="top:40px;border:4px solid black" >
+<!-- <img src="<%= image %>" style="top:40px;border:4px solid black" > -->
 <h3>Welcome to hexaware.Did I got your correct Employee Id</h3>
 
 
@@ -17,8 +17,7 @@
     <input id="imageData" type="hidden" name="imageData" value="<%= image %>"/>   
     <button>Yes</button>
 </form>
-<form id=form3 action='/fillData' method="post">
-    <input id="employeeid" type="hidden" name="employeeid" value="<%= details.employeeid%>"/> 
+<form id=form3  action='/fillData' method="post">
     <input id="imageData" type="hidden" name="imageData" value="<%= image %>"/>  
     <button >No</button>
 </form>
