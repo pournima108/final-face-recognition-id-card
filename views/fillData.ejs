@@ -1,39 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        body {
+            text-align:center;
+        }             
+#keypad {margin:auto; margin-top:20px; }
+#keypad tr td {
+vertical-align:middle;
+text-align:center;
+border:1px solid #000000;
+font-size:18px;
+font-weight:bold;
+width:40px;
+height:30px;
+cursor:pointer;
+background-color:#666666;
+color:#CCCCCC;}
+#keypad tr td:hover {background-color:#999999; color:#FFFF00;} */
+ .display {
+width:130px;
+margin:10px auto auto auto;
+}
+#message {
+text-align:center;
+color:#009900;
+font-size:14px;
+font-weight:bold;
+display:none;
+} */
+    </style>
         <script =text/javacript>
+        function showKeys(){
+        document.getElementById("keypad").style.visibility = "visible";
+        }
 
-
-
+        function addCode(key){
+        var employeeid = document.forms[0].employeeid;
+        if(employeeid.value.length < 5){
+            employeeid.value = employeeid.value + key;
+        }
+        if(employeeid.value.length > 5){
+        alert("Employee ID cannot be more than 5 digits");
+       }
+       }
+       
        function emptyCode(){
-       document.forms[0].code.value = "";
+       document.forms[0].employeeid.value = "";
        }
 
-       
+        function onPressBackspace() {
+        var employeeid = document.forms[0].employeeid
+        if(employeeid.value.length > 0){
+            employeeid.value = employeeid.value.substring(0,employeeid.value.length - 1);
+        } else {
+        alert("Nothing to delete");
+            }
+        }       
             function myFunction() {
             var image="<%= image %>";
             document.getElementById("imageData").value=image
             var employeeid = document.getElementById("employeeid").value;
             submitOK = "true";
             if (isNaN(employeeid)) {
-             alert("The employee should not be empty and it should not greater than  5 digit number");
+             alert("The employee should not be empty and it should be 5 digit number");
              submitOK = "false";
-    }
-    if (submitOK == "false") {
-        return false;
-    }
+        }       
+            if (submitOK == "false") {
+            return false;
+             }
 
             
             }
             </script>
 </head>
-<body onload="emptyCode()">
+<body onload="emptyCode(); showKeys()">
         <div class="card">
                 <img src="<%= image %>" style="top:40px;border:4px solid black">
                 <form action="/enroll" method="post"  onsubmit="return myFunction()">
+                    <table id="keypad" cellpadding="5" cellspacing="3">
+                     <tr>
+                    <td onclick="addCode('1');">1</td>
+                    <td onclick="addCode('2');">2</td>
+                    <td onclick="addCode('3');">3</td> 
+                </tr>   
+                <tr>
+                            <td onclick="addCode('4');">4</td>
+                    <td onclick="addCode('5');">5</td>
+                    <td onclick="addCode('6');">6</td>
+                </tr>
+                <tr>
+                            <td onclick="addCode('7');">7</td>
+                    <td onclick="addCode('8');">8</td>  
+                    <td onclick="addCode('9');">9</td> 
+                </tr>
+            <tr>
+                 <td onclick="emptyCode();">Reset</td>
+                    <td onclick="addCode('0');">0</td>
+                    <td onclick="onPressBackspace();">BS</td>
+                </tr>
+            </table>
                     <tr>
                             <td>Employee Id:</td>
-                            <td><input type="text" name="employeeid" type="number" id="employeeid" maxlength="5" required/></td> 
+                            <td><input type="text" name="employeeid" type="number" id="employeeid" maxlength="5"  class="display"  onfocus="showKeys()" /></td> 
                             <input id="imageData" type="hidden" name="imageData" value=""/>
                             <input type="submit"/>                     
                    </tr>
