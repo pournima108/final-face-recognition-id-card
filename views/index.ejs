@@ -1,11 +1,29 @@
-<script src="webcam.js"></script>
-<div id="errorBox"style="margin:0px auto;border:2px solid black;border-radius:5px;background-color:blanchedalmond;width:47%;text-align:center;visibility:'<%= typeof vis != 'undefined' ? vis : 'hidden'%>'"><%= typeof msg != 'undefined' ? msg : ''%></div>
+
+<!-- <div id="errorBox"style="margin:0px auto;border:2px solid black;border-radius:5px;background-color:blanchedalmond;width:47%;text-align:center;visibility:'<%= typeof vis != 'undefined' ? vis : 'hidden'%>'"><%= typeof msg != 'undefined' ? msg : ''%></div>
 <div id="my_camera" style="width:640px; height:480px;margin:0px auto;"></div>
-<div id="my_result"></div>
+<div id="my_result"></div> -->
+<head>
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>JavaScript Face Tracking Demo</title>
+
+    <meta name="Description" content="Face tracking demo in JavaScript"/>
+    <meta property="og:image" content="http://kdzwinel.github.io/JS-face-tracking-demo/img/step1.png"/>
+    <link rel="image_src" href="http://kdzwinel.github.io/JS-face-tracking-demo/img/step1.png"/>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <script src="js/main.js"></script>
 <script language="JavaScript">
-    Webcam.attach( '#my_camera' );
+
+//    var video = document.querySelector("#videoElement");
+//     navigator.getUserMedia( '#my_camera' );
     
-    function take_snapshot() {
+    // function take_snapshot() {
         // Webcam.snap( function(data_uri) {
         //     document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
 
@@ -19,27 +37,26 @@
         //     console.log("saved");
         //     });
         // });
-        Webcam.snap( function(data_uri) {
-            // document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
-            document.getElementById('snapshotText').innerHTML = '';
-            document.getElementById('snapshotText').style.visibility = 'hidden';
-            document.getElementById('my_camera').style.display = 'none';
-            document.getElementById('errorBox').style.display = 'none';
-            var element = document.getElementById('load');
-            element.classList.add('loader');
-            var raw_image_data = data_uri.replace(/^data\:image\/\w+\;base64\,/, '');
-            var src = "data:image/jpeg;base64,";
-            src += raw_image_data;
-            var newImage = document.createElement('img');
-            newImage.src = src;
-            newImage.width = newImage.height = "250";
-            // document.querySelector('#imageContainer').innerHTML = newImage.outerHTML;
-            document.getElementById('mydata').value = src;
-            document.getElementById('image').value = data_uri;
-            document.getElementById('myform').submit();
-        });
-    }
-    
+    //     Webcam.snap( function(data_uri) {
+    //         // document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
+    //         document.getElementById('snapshotText').innerHTML = '';
+    //         document.getElementById('snapshotText').style.visibility = 'hidden';
+    //         document.getElementById('my_camera').style.display = 'none';
+    //         document.getElementById('errorBox').style.display = 'none';
+    //         var element = document.getElementById('load');
+    //         element.classList.add('loader');
+    //         var raw_image_data = data_uri.replace(/^data\:image\/\w+\;base64\,/, '');
+    //         var src = "data:image/jpeg;base64,";
+    //         src += raw_image_data;
+    //         var newImage = document.createElement('img');
+    //         newImage.src = src;
+    //         newImage.width = newImage.height = "250";
+    //         // document.querySelector('#imageContainer').innerHTML = newImage.outerHTML;
+    //         document.getElementById('mydata').value = src;
+    //         document.getElementById('image').value = data_uri;
+    //         document.getElementById('myform').submit();
+    //     });
+    // }   
 </script>
 <style>
         .loader {
@@ -63,7 +80,30 @@
           100% { transform: rotate(360deg); }
         }
         </style>
-<div id="load" style="margin:0px auto"></div>
+        </head>
+        <body class="step1">
+
+                <div class="container">
+                    <div class="alert alert-danger"><strong>Oops!</strong> <span></span></div>
+                    <div class="jumbotron">
+                        <div id="step1">
+                            <h1><i class="glyphicon glyphicon-facetime-video"></i></h1>
+                
+                            <p class="lead">
+                                Make sure that your whole face is visible below.
+                                <i class="glyphicon glyphicon-question-sign help" data-placement="bottom"
+                                   data-content="<img src='img/step1.png' />" data-html="true"></i>
+                            </p>
+                
+                            <figure class="not-ready">
+                                <video  id="camera-stream" width="240" autoplay></video>
+                                <img id="snap">
+                                <canvas width="240" class="visible"></canvas>
+                                <canvas width="240" class="hidden"></canvas>
+                            </figure>
+                        </div>
+                </div>
+                <div id="load" style="margin:0px auto"></div>
 <br/>
 <div style="    text-align: center;
 /* border: 4px solid black; */
@@ -76,11 +116,25 @@ border-radius: 5px;
 -webkit-box-shadow: 10px 10px 31px -9px rgba(0,0,0,0.75);
 -moz-box-shadow: 10px 10px 31px -9px rgba(0,0,0,0.75);
 box-shadow: 10px 10px 31px -9px rgba(0,0,0,0.75);">
-    <a href="javascript:void(take_snapshot())" id="snapshotText" style:"text-decoration:none;color:white">Take Snapshot</a>
+    <!-- <a href="javascript:void(take_snapshot())" id="snapshotText" style:"text-decoration:none;color:white">Take Snapshot</a> -->
 </div>
-<form id="myform" method="post" action="/upload">
-    <input id="mydata" type="hidden" name="mydata" value=""/>
-    <input id="image" type="hidden" name="image" value=""/>
+</div id="load" style="margin:0px auto"></div>
+                <!-- /container -->
+                
+                <!-- <script src="//code.jquery.com/jquery-1.10.2.min.js"></script> -->
+                <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+                <script src="js/vendor/modernizr.min.js"></script>
+                <script src="js/vendor/bootstrap.min.js"></script>
+                <script src="js/vendor/tracking-min.js"></script>
+                <script src="js/vendor/data/face-min.js"></script>
+                <script src="js/vendor/gif.js"></script>
+                <script src="js/vendor/gif.worker.js"></script>
+                
+                <script src="js/main.js"></script>
+
+
+ <form id="myform" method="post" action="/upload">
+    <input id="mydata" type="hidden" name="mydata" value="<img src='img/step1.png' />"/>
+    <input id="image" type="hidden" name="image" value="snap"/>
 </form>
-<div id="load" style="margin:0px auto"></div>
-<!-- <div id="imageContainer"><div> -->
+
