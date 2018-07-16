@@ -32,11 +32,11 @@ app.use(bodyParser.urlencoded({extended: true}));
  */
 // app.use('/', route);
 app.get('/', (req, res) => {
-    res.render('frontpage');
+    res.render('index');
 })
 
 app.get('/getdata',(req,res)=>{
-    res.render('index')
+    res.render('index_old')
 })
 
 
@@ -48,36 +48,35 @@ app.get('/getdata',(req,res)=>{
 // })
 
 app.post('/response',(req,res)=>{
-    var img=JSON.stringify(req.body.imageData);
-    console.log(img);
+    var image=req.body.imageData;
+    //console.log(img);
     console.log("response page");
-    var subjectid=JSON.stringify(req.body.employeeid);
+    var subjectid = req.body.employeeid;
     console.log(subjectid)
     detailsArray.employeeDetails.forEach((element) => {
         if(element.employeeid == subjectid) {
+            //console.log(element.employeeid)
             var today = new Date();
             var dd = today.getDate();
             var mm = today.getMonth()+1; //January is 0!
             var yyyy = today.getFullYear();
             today = dd + '/' + mm + '/' + yyyy;
-            console.log(element)
-    console.log("response page")
+    console.log("response page");
     res.render('response', {
         msg:'response page',
         details:element,
         date:today,
-        image:img
-    })
+        image:image
+    });
 }
 })
 })
 
 app.post('/fillData',(req,res)=>{
-    var img=JSON.stringify(req.body.imageData);
+    var image=req.body.imageData;
     console.log("filldata page")
-    res.render("fillData",{
-        details:req.body,
-        image:img
+    res.render('fillData',{
+        image:image
     })
 })
 
@@ -92,9 +91,11 @@ app.post('/enroll',(req,res)=> {
     //var data = JSON.stringify(req.body.imageData);
     //console.log(imageData)
     var img = JSON.stringify(req.body.imageData);
-    console.log(img)    
+    var data=req.body.imageData
+    //console.log(img)
     var subjectid=JSON.stringify(req.body.employeeid);
-    console.log(subjectid);
+    var subject_id=req.body.employeeid;
+    //console.log(subjectid);
     var options1 ={
         method:'POST',
         url: 'https://api.kairos.com/enroll',
@@ -106,8 +107,6 @@ app.post('/enroll',(req,res)=> {
         body: '{"image":' + img + ',"subject_id": '+ subjectid +', "gallery_name":"MyGallery"}'
     };
     request(options1,function(error,response,body) {
-
- JSON.parse(body)
         if(error){
             res.render('index', {
                 msg: 'Face not recognized. Please try again',
@@ -115,8 +114,9 @@ app.post('/enroll',(req,res)=> {
             })
         }else{
             //console.log(body.images[0].transaction.subject_id);
+
             detailsArray.employeeDetails.forEach((element) => {
-                if(element.employeeid == subjectid) {
+                if(element.employeeid == subject_id) {
                     var today = new Date();
                     var dd = today.getDate();
                     var mm = today.getMonth()+1; //January is 0!
@@ -124,9 +124,9 @@ app.post('/enroll',(req,res)=> {
                     today = dd + '/' + mm + '/' + yyyy;
                     res.render('fillingConfirmation',{
                         details:element,
-                        image:img
+                        image:data
                     })
-         
+
         }
     })
 
@@ -168,7 +168,7 @@ app.post('/upload', (req, res) => {
                 details:req.body,
                 image :img
             })
-        }     
+        }
        else {
         // console.log(JSON.stringify(body) + "Response");
         console.log(body.images[0].transaction.subject_id);

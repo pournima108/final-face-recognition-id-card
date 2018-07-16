@@ -4,30 +4,14 @@
 <head>
   <title>Hexaware ID Card Generator</title>
   <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
-
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css"> -->
+<link rel="stylesheet" href="js/cardify.css">
   <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
-  <style>
-    .card {
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-      max-width: 600px;
-      margin: auto;
-      text-align: center;
-      font-family: arial;
-    }
 
-    .printButton{
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-      max-width: 66px;
-      margin: auto;
-      text-align: center;
-      font-family: arial;
-    }
-    .card .card-image img {
-      left: 10px;
-    }
-  </style>
+
   <script>
       function printDiv(divName) {
           // document.getElementById('myForm').submit();
@@ -37,72 +21,89 @@
           window.print();
           // document.body.innerHTML = originalContents;
       }
-  
+
   </script>
+  <!-- <script type="text/javascript">
+
+        $(document).ready( function() {
+
+          setTimeout(function()
+          {
+              printDiv('printMe')
+          },
+          8000)
+        });
+        </script> -->
 </head>
-<body style="background-color:rgb(254, 252, 237)">
-    <h3 style="text-align:center">Temporary ID Card</h3>
-    <!-- <form id="myForm" method="post" action="/printCard" > -->
-      <div class="col s12 m7" class="card" id="printMe">
-          <!-- <h2 class="header">Horizontal Card</h2> -->
-        <div class="card horizontal">
-          <div class="card-image">
-            <img src="https://hexaware.com/wp-content/themes/hexaware-main/images/Brand/primary/logo.png" style="top:10px;height:100px;margin:0px auto;" >
-            <!-- <input type="hidden" name="image" value="<%= image %>"/> -->
-            <img src="<%= image %>" style="top:40px;border:4px solid black">
-          </div>
-          <div class="card-stacked">
-            <div class="card-content">
-              <!-- <form id="myForm" method="post" action="/printCard" enctype="multipart/form-data"> -->
-              <!-- <input type="hidden" name="employeeid" value="<%= details.employeeid %>"/> -->
-              <h6 style="display:inline">ID: </h6><h6 style="display:inline"><%= details.employeeid %><h6>
-              <!-- <input type="hidden" name="employeename" value="<%= details.employeedetails[0].employeename%>"/> -->
-              <h5><%= details.employeedetails[0].employeename%></h5>
-              <!-- <h5 style="display:inline">Phone: </h5><h6 style="display:inline">6676786876</h6> -->
-              <table>
-                <!-- <input type="hidden" name="mobileno" value="<%= details.employeedetails[0].mobileno %>"/> -->
-                <tr>
-                  <td>Phone</td>
-                  <td>:</td>
-                  <td><%= details.employeedetails[0].mobileno %></td>
-                </tr>
-                <tr>
-                  <!-- <input type="hidden" name="mobileno" value="<%= details.employeedetails[0].mobileno %>"/> -->
-                  <td>Company</td>
-                  <td>:</td>
-                  <td>Hexaware</td>
-                </tr>
-                <tr>
-                  <!-- <input type="hidden" name="department" value="<%= details.employeedetails[0].department %>"/> -->
-                  <td>Department</td>
-                  <td>:</td>
-                  <td><%= details.employeedetails[0].department %></td>
-                </tr>
-                <tr>
-                  <td>To Meet</td>
-                  <td>:</td>
-                  <td><div contenteditable="true">Click to Edit</div></td>
-                  
-                </tr>
-                <tr>
-                  <td>Purpose</td>
-                  <td>:</td>
-                  <td>Temporary ID</td>
-                </tr>
-              </table>
-            </div>
-            <div class="card-action">
-              <!-- <input type="hidden" name="date" value="<%= date%>"/> -->
-              <a>Validity:</a><span><%= date%></span>
-            </div>
-          </div>
-        </div>
+<body>
+
+    <aside class="profile-card">
+      <header>
+        <!-- here’s the avatar -->
+
+          <img src="<%= image %>" class="hoverZoomLink" style="height:100px; width: 100px; border:5px solid #e4e7ff; border-radius:50%">
+
+
+        <!-- the username -->
+        <h1><%= details.employeedetails[0].employeename%></h1>
+
+        <!-- and role or location -->
+        <h2>Emp ID : <%= details.employeeid %></h2>
+
+      </header>
+
+      <!-- bit of a bio; who are you? -->
+      <div class="profile-bio">
+
+        <!-- <p>
+          It takes monumental improvement for us to change how we live our lives. Design is the way we access that improvement.
+        </p> -->
+        <table style="text-align:left;">
+          <!-- <input type="hidden" name="mobileno" value="<%= details.employeedetails[0].mobileno %>"/> -->
+          <tr>
+            <td><b>Phone<b></td>
+            <td>&emsp;:&emsp;</td>
+            <td><%= details.employeedetails[0].mobileno %></td>
+          </tr>
+          <tr>
+            <!-- <input type="hidden" name="mobileno" value="<%= details.employeedetails[0].mobileno %>"/> -->
+            <td><b>Company</b></td>
+            <td>&emsp;:&emsp;</td>
+            <td>Hexaware</td>
+          </tr>
+          <tr>
+            <!-- <input type="hidden" name="department" value="<%= details.employeedetails[0].department %>"/> -->
+            <td><b>Department</b></td>
+            <td>&emsp;:&emsp;</td>
+            <td><%= details.employeedetails[0].department %></td>
+          </tr>
+        </br>
+          <tr>
+            <td><b>To Meet</b></td>
+            <td>&emsp;:&emsp;</td>
+            <td><div contenteditable="true">Click to Edit</div></td>
+
+          </tr>
+          <tr>
+            <td><b>Purpose</b></td>
+            <td>&emsp;:&emsp;</td>
+            <td>Temporary ID</td>
+          </tr>
+        </table>
+
       </div>
-    <!-- </form> -->
-    <br/>
-    <!-- <div class='printButton' style="background-color: rgba(26, 21, 21, 0.94);padding:2px"><button onclick="printDiv('printMe')"  style="background-color: rgba(60, 38, 0, 0.845);color:white">PRINT</button></div> -->
+      <ul class="profile-social-links">
+        <img src="images/logo.png" style="height:50px;">
+      </ul>
+      <!-- some social links to show off -->
+        <!-- <button type="button" class="btn pmd-ripple-effect btn-primary"> Primary </button > -->
+    </aside>
+    <button type="button" class="btn pmd-ripple-effect btn-primary"> Primary </button >
+    <!--Primary button with a ripple effect-->
+    <!-- <button type="button" class="btn pmd-ripple-effect btn-primary"> Primary </button >
     <div class='printButton' style="background-color: rgba(26, 21, 21, 0.94);padding:2px">
         <button onclick="printDiv('printMe')"  style="background-color: rgba(60, 38, 0, 0.845);color:white">PRINT</button>
-    </div>
-</body>
+    </div> -->
+  </body>
+
 </html>

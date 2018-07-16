@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	  <meta name="author" content="Hexaware R&D Lab">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,600">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" type="text/css">
+    <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+	<title>FaceID-Webcam</title>
+
+</head>
+<body data-spy="scroll" data-target=".navbar" class="has-loading-screen">
+</br></br>
+<script src="webcam.js"></script>
+<div id="errorBox"style="margin:0px auto;border-radius:5px;width:47%;text-align:center;visibility:'<%= typeof vis != 'undefined' ? vis : 'hidden'%>'"><%= typeof msg != 'undefined' ? msg : ''%></div>
+<div id="my_camera" style="width:640px; height:480px;margin:0px auto;">
+
+</div>
+
+<!-- <div class="camera-preview-border" style="border:2px solid black; height: 240px;z-index:-10px; margin:5px; padding:5px;"></div> -->
+
+<div id="my_result"></div>
+<script language="JavaScript">
+    Webcam.attach( '#my_camera' );
+
+    function take_snapshot() {
+        // Webcam.snap( function(data_uri) {
+        //     document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
+
+        // } );
+        // var data_uri = Webcam.snap(function(data_uri) {
+        //     document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
+        //     Webcam.upload( data_uri, 'upload', function(code, text) {
+        //     // Upload complete!
+        //     // 'code' will be the HTTP response code from the server, e.g. 200
+        //     // 'text' will be the raw response content
+        //     console.log("saved");
+        //     });
+        // });
+        Webcam.snap( function(data_uri) {
+            // document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
+            document.getElementById('snapshotText').innerHTML = '';
+            document.getElementById('snapshotText').style.visibility = 'hidden';
+            document.getElementById('my_camera').style.display = 'none';
+            document.getElementById('my_camera').style.borderRadius = '10px';
+            document.getElementById('my_camera').style.border = '0px solid #000000';
+            document.getElementById('errorBox').style.display = 'none';
+
+            var element = document.getElementById('load');
+            element.classList.add('loader');
+            var raw_image_data = data_uri.replace(/^data\:image\/\w+\;base64\,/, '');
+            var src = "data:image/jpeg;base64,";
+            src += raw_image_data;
+            var newImage = document.createElement('img');
+            newImage.src = src;
+            newImage.width = newImage.height = "250";
+            // document.querySelector('#imageContainer').innerHTML = newImage.outerHTML;
+            document.getElementById('mydata').value = src;
+            document.getElementById('image').value = data_uri;
+            document.getElementById('myform').submit();
+        });
+    }
+
+</script>
+
+<div id="load" style="margin:0px auto"></div>
+<div class="row">
+	<div class="col-md-12">
+	<div class="text-center align-items-center">
+		  <a href="javascript:void(take_snapshot())" id="snapshotText" style:"text-decoration:none;color:white" class="btn btn-primary btn-lg m-2 ts-width__200px">Take Snapshot</a>
+	</div>
+ </div>
+</div>
+
+<!-- <div class="container align-self-center">
+    <div class="align-items-center text-center py-3">
+        <h1>Welcome to Hexaware</h1>
+        <div class="text-center py-5">
+          <a href="javascript:void(take_snapshot())" id="snapshotText" style:"text-decoration:none;color:white" class="btn btn-primary btn-lg m-2 ts-width__200px">Take Snapshot</a>
+        </div>
+    </div>
+
+</div> -->
+
+<form id="myform" method="post" action="/upload">
+    <input id="mydata" type="hidden" name="mydata" value=""/>
+    <input id="image" type="hidden" name="image" value=""/>
+</form>
+<div id="load" style="margin:0px auto"></div>
+<!-- <div id="imageContainer"><div> -->
