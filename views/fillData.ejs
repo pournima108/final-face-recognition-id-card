@@ -25,10 +25,8 @@
 if (submitOK == "false") {
   return false;
 }
-
-
       }
-      </script>
+</script>
 
 </head>
 <body data-spy="scroll" data-target=".navbar" class="has-loading-screen">
@@ -73,10 +71,14 @@ if (submitOK == "false") {
                               	<h3>But it seems we could not recognize you. No matter, just type your ID below!</h3>
                                 <div class="row">
                             		  	<div class="col-md-6">
+                                                <input type="tel" class="keyboard form-control" size="5" required autocomplete="off" name="employeeid" type="number" id="employeeid" placeholder="Employee ID"/>
                               				  <!-- <input type="tel" class="keyboard form-control" id="telephone-keypad-demo" size="5" required autocomplete="off" placeholder="Employee ID"/> -->
-                                        <input type="tel" class="keyboard form-control" size="5" required autocomplete="off" placeholder="Employee ID"/>
+                                       
                             		    </div>
                                     <div class="col-md-6">
+                                            
+                                            <input id="imageData" type="hidden" name="imageData" value=""/>
+                                            <!-- <input type="text"  maxlength="5"  class="display"  onfocus="showKeys()" / -->
                                       <input type="submit" class="btn btn-primary btn-lg m-2 ts-width__200px"/>
                                     </div>
                                 </div>

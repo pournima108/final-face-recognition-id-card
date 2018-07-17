@@ -1,92 +1,83 @@
 <!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	  <meta name="author" content="Hexaware R&D Lab">
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,600">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" type="text/css">
-    <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
-	<title>FaceID-Webcam</title>
-
-</head>
-<body data-spy="scroll" data-target=".navbar" class="has-loading-screen">
-</br></br>
-<script src="webcam.js"></script>
-<div id="errorBox"style="margin:0px auto;border-radius:5px;width:47%;text-align:center;visibility:'<%= typeof vis != 'undefined' ? vis : 'hidden'%>'"><%= typeof msg != 'undefined' ? msg : ''%></div>
-<div id="my_camera" style="width:640px; height:480px;margin:0px auto;">
-
-</div>
-
-<!-- <div class="camera-preview-border" style="border:2px solid black; height: 240px;z-index:-10px; margin:5px; padding:5px;"></div> -->
-
-<div id="my_result"></div>
-<script language="JavaScript">
-    Webcam.attach( '#my_camera' );
-
-    function take_snapshot() {
-        // Webcam.snap( function(data_uri) {
-        //     document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
-
-        // } );
-        // var data_uri = Webcam.snap(function(data_uri) {
-        //     document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
-        //     Webcam.upload( data_uri, 'upload', function(code, text) {
-        //     // Upload complete!
-        //     // 'code' will be the HTTP response code from the server, e.g. 200
-        //     // 'text' will be the raw response content
-        //     console.log("saved");
-        //     });
-        // });
-        Webcam.snap( function(data_uri) {
-            // document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
-            document.getElementById('snapshotText').innerHTML = '';
-            document.getElementById('snapshotText').style.visibility = 'hidden';
-            document.getElementById('my_camera').style.display = 'none';
-            document.getElementById('my_camera').style.borderRadius = '10px';
-            document.getElementById('my_camera').style.border = '0px solid #000000';
-            document.getElementById('errorBox').style.display = 'none';
-
-            var element = document.getElementById('load');
-            element.classList.add('loader');
-            var raw_image_data = data_uri.replace(/^data\:image\/\w+\;base64\,/, '');
-            var src = "data:image/jpeg;base64,";
-            src += raw_image_data;
-            var newImage = document.createElement('img');
-            newImage.src = src;
-            newImage.width = newImage.height = "250";
-            // document.querySelector('#imageContainer').innerHTML = newImage.outerHTML;
-            document.getElementById('mydata').value = src;
-            document.getElementById('image').value = data_uri;
-            document.getElementById('myform').submit();
-        });
-    }
-
-</script>
-
-<div id="load" style="margin:0px auto"></div>
-<div class="row">
-	<div class="col-md-12">
-	<div class="text-center align-items-center">
-		  <a href="javascript:void(take_snapshot())" id="snapshotText" style:"text-decoration:none;color:white" class="btn btn-primary btn-lg m-2 ts-width__200px">Take Snapshot</a>
-	</div>
- </div>
-</div>
-
-<!-- <div class="container align-self-center">
-    <div class="align-items-center text-center py-3">
-        <h1>Welcome to Hexaware</h1>
-        <div class="text-center py-5">
-          <a href="javascript:void(take_snapshot())" id="snapshotText" style:"text-decoration:none;color:white" class="btn btn-primary btn-lg m-2 ts-width__200px">Take Snapshot</a>
-        </div>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="Description" content="Face tracking demo in JavaScript"/>
+        <meta property="og:image" content="http://kdzwinel.github.io/JS-face-tracking-demo/img/step1.png"/>
+        <link rel="image_src" href="http://kdzwinel.github.io/JS-face-tracking-demo/img/step1.png"/>
+    
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="css/main.css"/>
+        <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    
+        <script src="js/main.js">
+        // function submit(){
+        //     $getUserMedia(camera-stream,function(data){
+        //         var data =document.getElementById("#snap").
+        //         document.getElementById("image")=mydata
+        //         
+        //     })
+       
+        // }
+        $document.getElementById('myform').submit();
+        </script>
+       
+     </head>
+        <body class="step1">
+                    <div class="container">
+                        <div class="alert alert-danger"><strong>Oops!</strong> <span></span></div>
+                        <div class="jumbotron">
+                            <div id="step1">
+                                <h1><i class="glyphicon glyphicon-facetime-video"></i></h1>
+                    
+                                <p class="lead">
+                                    Make sure that your whole face is visible below.
+                                    <i class="glyphicon glyphicon-question-sign help" data-placement="bottom"
+                                       data-content="<img src='img/step1.png' />" data-html="true"></i>
+                                </p>
+                                
+                                <figure class="not-ready">
+                                    <video  id="camera-stream" width="240" autoplay></video>
+                                    <img id="snap">
+                                    <canvas width="240" class="visible"></canvas>
+                                    <canvas width="240" class="hidden"></canvas>
+                                    <form id="myform" method="post" action="/upload" onclick="submit"></form>
+                                        <input id="mydata" type="hidden" name="mydata" value="mydata"/>     
+                                        <button type="submit">Submit</button>
+                                    </form>
+                                </figure>
+                            
+                            </div>
+                    </div>
+                    <div id="load" style="margin:0px auto"></div>
+    <br/>
+    <div style="    text-align: center;
+    /* border: 4px solid black; */
+    background-color: #e8e8e8;
+    color: white;
+    padding: 11px;
+    margin: -4px auto;
+    width: 20%;
+    border-radius: 5px;
+    -webkit-box-shadow: 10px 10px 31px -9px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 31px -9px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 31px -9px rgba(0,0,0,0.75);">
+        <!-- <a href="javascript:void(take_snapshot())" id="snapshotText" style:"text-decoration:none;color:white">Take Snapshot</a> -->
     </div>
-
-</div> -->
-
-<form id="myform" method="post" action="/upload">
-    <input id="mydata" type="hidden" name="mydata" value=""/>
-    <input id="image" type="hidden" name="image" value=""/>
-</form>
-<div id="load" style="margin:0px auto"></div>
-<!-- <div id="imageContainer"><div> -->
+    </div id="load" style="margin:0px auto"></div>
+                    <!-- /container -->
+                    
+                    <!-- <script src="//code.jquery.com/jquery-1.10.2.min.js"></script> -->
+                    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+                    <script src="js/vendor/modernizr.min.js"></script>
+                    <script src="js/vendor/bootstrap.min.js"></script>
+                    <script src="js/vendor/tracking-min.js"></script>
+                    <script src="js/vendor/data/face-min.js"></script>
+                    <script src="js/vendor/gif.js"></script>
+                    <script src="js/vendor/gif.worker.js"></script>
+                    
+                    <script src="js/main.js"></script>
+    </body>
+    
+    

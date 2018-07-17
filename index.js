@@ -91,9 +91,13 @@ app.post('/enroll',(req,res)=> {
     //var data = JSON.stringify(req.body.imageData);
     //console.log(imageData)
     var img = JSON.stringify(req.body.imageData);
+    //console.log(img)
     var data=req.body.imageData
+    //console.log(data)
     var subjectid=JSON.stringify(req.body.employeeid);
+    // console.log(subjectid)
     var subject_id=req.body.employeeid;
+    // console.log(subject_id)
     //console.log(subjectid);
     var options1 ={
         method:'POST',
@@ -106,6 +110,7 @@ app.post('/enroll',(req,res)=> {
         body: '{"image":' + img + ',"subject_id": '+ subjectid +', "gallery_name":"MyGallery"}'
     };
     request(options1,function(error,response,body) {
+        // JSON.parse(body)
         if(error){
             res.render('index', {
                 msg: 'Face not recognized. Please try again',
@@ -113,7 +118,7 @@ app.post('/enroll',(req,res)=> {
             })
         }else{
             //console.log(body.images[0].transaction.subject_id);
-
+        //    console.log("correct data")
             detailsArray.employeeDetails.forEach((element) => {
                 if(element.employeeid == subject_id) {
                     var today = new Date();
