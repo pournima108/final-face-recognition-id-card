@@ -32,11 +32,11 @@ app.use(bodyParser.urlencoded({extended: true}));
  */
 // app.use('/', route);
 app.get('/', (req, res) => {
-    res.render('frontpage');
+    res.render('index');
 })
 
 app.get('/getdata',(req,res)=>{
-    res.render('index')
+    res.render('index_old')
 })
 
 
@@ -92,7 +92,6 @@ app.post('/enroll',(req,res)=> {
     //console.log(imageData)
     var img = JSON.stringify(req.body.imageData);
     var data=req.body.imageData
-    //console.log(img)    
     var subjectid=JSON.stringify(req.body.employeeid);
     var subject_id=req.body.employeeid;
     //console.log(subjectid);
@@ -126,7 +125,7 @@ app.post('/enroll',(req,res)=> {
                         details:element,
                         image:data
                     })
-         
+
         }
     })
 
@@ -168,7 +167,7 @@ app.post('/upload', (req, res) => {
                 details:req.body,
                 image :img
             })
-        }     
+        }
        else {
         // console.log(JSON.stringify(body) + "Response");
         console.log(body.images[0].transaction.subject_id);
