@@ -92,7 +92,6 @@ app.post('/enroll',(req,res)=> {
     //console.log(imageData)
     var img = JSON.stringify(req.body.imageData);
     var data=req.body.imageData
-    //console.log(img)
     var subjectid=JSON.stringify(req.body.employeeid);
     var subject_id=req.body.employeeid;
     //console.log(subjectid);

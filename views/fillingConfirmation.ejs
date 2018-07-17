@@ -15,14 +15,12 @@
 <h2 style="display:inline">ID: </h6><h6 style="display:inline"><%= details.employeeid %><h2>
         <img src="<%= image %>" class="text-center py-5" style="top:40px;border:1px solid black; border-radius:5px" >
 <h3>Did I got your correct Employee ID?</h3>
-
-
 <form action='/response' method=post>
     <input id="employeeid" type="hidden" name="employeeid" value="<%= details.employeeid %>"/>
     <input id="imageData" type="hidden" name="imageData" value="<%= image %>"/>
     <button>print</button>
 </form>
-<form action='/getdata' method=post>
+<form action='/getdata' method=get>
     <button>Camera</button>
 </form>
 </body>
