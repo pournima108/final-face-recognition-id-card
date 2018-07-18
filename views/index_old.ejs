@@ -10,18 +10,26 @@
         <link rel="stylesheet" href="css/bootstrap.min.css"/>
         <link rel="stylesheet" href="css/main.css"/>
         <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <script language='text/javascript' src="js/main.js"></script>
     
-        <script src="js/main.js">
-        // function submit(){
-        //     $getUserMedia(camera-stream,function(data){
-        //         var data =document.getElementById("#snap").
-        //         document.getElementById("image")=mydata
-        //         
-        //     })
-       
-        // }
-        $document.getElementById('myform').submit();
-        </script>
+        <script>
+
+                function take_snapshot() {
+                    var video = document.getElementById('video');
+                   var canvas = document.getElementById('yourCanvasID');
+                   //var canvas1=document.getElementById('canvas2')
+                   var context = canvas.getContext('2d');
+                   var myImage = canvas.toDataURL("image/png");
+                    var imageElement = document.getElementById("snap");  
+                    //document.write(imageElement)
+                    imageElement.src = myImage;   
+                    document.getElementById('myImage') =myImage  
+                    document.write(myImage) 
+                    console.log('in snapshot') 
+                    document.getElementById('myform').submit();      
+                }
+                  </script>
+    
        
      </head>
         <body class="step1">
@@ -40,18 +48,16 @@
                                 <figure class="not-ready">
                                     <video  id="camera-stream" width="240" autoplay></video>
                                     <img id="snap">
-                                    <canvas width="240" class="visible"></canvas>
-                                    <canvas width="240" class="hidden"></canvas>
-                                    <form id="myform" method="post" action="/upload" onclick="submit"></form>
-                                        <input id="mydata" type="hidden" name="mydata" value="mydata"/>     
-                                        <button type="submit">Submit</button>
-                                    </form>
+                                    <canvas id="yourCanvasID" width="240" class="visible"></canvas>
+                                    <canvas id="canvas2" width="240" class="hidden"></canvas>
                                 </figure>
-                            
                             </div>
                     </div>
-                    <div id="load" style="margin:0px auto"></div>
+                    </div>
+                  
+                    <!-- <div id="load" style="margin:0px auto"></div>
     <br/>
+  
     <div style="    text-align: center;
     /* border: 4px solid black; */
     background-color: #e8e8e8;
@@ -63,11 +69,14 @@
     -webkit-box-shadow: 10px 10px 31px -9px rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 31px -9px rgba(0,0,0,0.75);
     box-shadow: 10px 10px 31px -9px rgba(0,0,0,0.75);">
-        <!-- <a href="javascript:void(take_snapshot())" id="snapshotText" style:"text-decoration:none;color:white">Take Snapshot</a> -->
-    </div>
-    </div id="load" style="margin:0px auto"></div>
-                    <!-- /container -->
-                    
+    </div> -->
+
+    <form id="myform" method="post" action="/upload" onsubmit="return take_snapshot()"></form>
+    <input id="myImage" type="hidden" name="myImage" value="" />   
+    <input type="submit"/>  
+</form>
+<!-- <div id="load" style="margin:0px auto"></div> -->
+                    <!-- /container -->         
                     <!-- <script src="//code.jquery.com/jquery-1.10.2.min.js"></script> -->
                     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
                     <script src="js/vendor/modernizr.min.js"></script>
