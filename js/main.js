@@ -1,32 +1,10 @@
 (function () {
   var video = document.querySelector('video');
-  var gif = null;
-  var trackingTask = null;
-  var lastGif = null;
 
-  var flameFrames = [];
-  var flames = [];
+  var trackingTask = null;
 
   var pictureWidth = 240;
   var pictureHeight = 180;
-
-  //load all flame animation frames
-  function loadImages() {
-    // var promises = [];
-
-    // for (var i = 1; i < 14; i++) {
-    //   var deferred = new $.Deferred();
-    //   var img = new Image();
-
-    //   img.onload = deferred.resolve;
-    //   img.src = "img/flame/" + i + ".png";
-
-    //   flameFrames.push(img);
-    //   promises.push(deferred.promise());
-    // }
-    console.log("You are about to take photo");
-    // return $.when.apply($, promises);
-  }
 
   function checkRequirements() {
     var deferred = new $.Deferred();
@@ -133,12 +111,10 @@
   }
 
   function step1() {
-    // var waitForImages = loadImages();
 
     checkRequirements()
       .then(searchForFrontCamera)
       .then(setupVideo)
-      // .then(waitForImages)
       .done(function () {
         //Hide the 'enable the camera' info
         $('#step1 figure').removeClass('not-ready');
@@ -167,7 +143,7 @@
   
       // Make a copy of the current frame in the video on the canvas.
       context.drawImage(video, 0, 0, width, height);
-      console.log("SNAPSHOT DATA "+hidden_canvas.toDataURL('image/png'));
+
       // Turn the canvas image into a dataURL that can be used as a src for our photo.
       return hidden_canvas.toDataURL('image/png');
     }
@@ -191,6 +167,8 @@
 
     trackingTask = tracking.track('#step1 video', tracker);
 
+    var call_flag = true;
+
     tracker.on('track', function (event) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -200,28 +178,34 @@
          
         console.log("Face Tracked");
 
-          var video = document.querySelector('#camera-stream');
-          //var image = document.querySelector('#snap');
-          var image = document.querySelector('#step1 canvas.hidden');
-          
-          var snap = takeSnapshot();
+        var video = document.querySelector('#camera-stream');
+        var image = document.querySelector('#step1 canvas.hidden');
+        
+        var snap = takeSnapshot();
 
-          // Show image. 
-          image.setAttribute('src', snap);
-          image.classList.add("visible");
+        // Show image. 
+        image.setAttribute('src', snap);
+        image.classList.add("visible");
 
-          // Pause video playback of stream.
-          video.pause();
+        // Pause video playback of stream.
+        video.pause();
 
-          //video.src="";
+        window.stream.getTracks()[0].stop();
 
-          window.stream.getTracks()[0].stop();
+        //console.log("video off")
 
-          console.log("video off")
+        //console.log("SNAPSHOT DATA : " + image.toDataURL('image/jpeg'));
 
-          return true;
+        trackingTask.stop();
 
-          // trackingTask.stop();
+        if(call_flag == true) {
+          call_flag = false;
+          console.log("Call flag")
+          take_snapshot(image.toDataURL('image/jpeg'));
+        }
+
+        return true;
+
       });
     });
   }

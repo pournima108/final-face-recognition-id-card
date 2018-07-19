@@ -157,42 +157,52 @@ app.post('/upload', (req, res) => {
         },
         body: '{"image":' + data + ',"gallery_name":"MyGallery"}'
     };
+
+    //console.log("Options Body : " + options.body);
+
     request(options, function (error, response, body) {
         // if (error) throw new Error(error);
-        body = JSON.parse(body);
+        //body = JSON.parse(body);
+        // console.log("Array check");
+        // console.log(body.images instanceof Array);
+        // console.log(Array.isArray(JSON.parse(body).images));
+
+        console.log("Response Body : " + JSON.stringify(body));
         // console.log(JSON.stringify(body.images[0].transaction.message));
-        if(body.hasOwnProperty('Errors')) {
+        if (JSON.parse(body) === "Authentication failed") {
+            res.render('frontpage')
+        } else if(JSON.parse(body).hasOwnProperty('Errors')) {
             res.render('index_old', {
                 msg: 'Face not recognized. Please try again',
                 vis: 'visible'
             })
-        } else if(body.images[0].transaction.message == 'no match found'){
+        // } else if(body.images[0].transaction.message == 'no match found'){
+        } else if(Array.isArray(JSON.parse(body).images) && JSON.parse(body).images[0].transaction.message === "no match found"){
             res.render('fillData',{
                 msg: 'Face not recognized .Please fill the data',
                 vis: 'visible',
                 details:req.body,
                 image :img
             })
+        } else {
+            // console.log(JSON.stringify(body) + "Response");
+            console.log(JSON.parse(body).images[0].transaction.subject_id);
+            subject_id = JSON.parse(body).images[0].transaction.subject_id;
+            detailsArray.employeeDetails.forEach((element) => {
+                if(element.employeeid == subject_id) {
+                    var today = new Date();
+                    var dd = today.getDate();
+                    var mm = today.getMonth()+1; //January is 0!
+                    var yyyy = today.getFullYear();
+                    today = dd + '/' + mm + '/' + yyyy;
+                    // var img = new Buffer(data, 'base64');
+                    res.render('welcomeCard',{
+                        details:element,
+                        image:img
+                    });
+                }
+            })
         }
-       else {
-        // console.log(JSON.stringify(body) + "Response");
-        console.log(body.images[0].transaction.subject_id);
-        subject_id = body.images[0].transaction.subject_id;
-        detailsArray.employeeDetails.forEach((element) => {
-            if(element.employeeid == subject_id) {
-                var today = new Date();
-                var dd = today.getDate();
-                var mm = today.getMonth()+1; //January is 0!
-                var yyyy = today.getFullYear();
-                today = dd + '/' + mm + '/' + yyyy;
-                // var img = new Buffer(data, 'base64');
-                res.render('welcomeCard',{
-                    details:element,
-                    image:img
-                });
-            }
-        })
-    }
         // res.end("saved");
     });
     // res.end("submitted");

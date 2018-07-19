@@ -11,24 +11,28 @@
         <link rel="stylesheet" href="css/main.css"/>
         <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
         <script language='text/javascript' src="js/main.js"></script>
+
+        <style>
+            .buttonSubmit {
+                display: none;
+            }
+        </style>
     
         <script>
+           function take_snapshot(image) {
+                console.log("Inside take_snapshot");
+                console.log(image);
 
-           function take_snapshot() {
-                    var video = document.getElementById('video');
-                   var canvas = document.getElementById('yourCanvasID');
-                   //var canvas1=document.getElementById('canvas2')
-                   var context = canvas.getContext('2d');
-                   var myImage = canvas.toDataURL("image/png");
-                    var imageElement = document.getElementById("snap");  
-                    //document.write(imageElement)
-                    imageElement.src = myImage;   
-                    document.getElementById('myImage') =myImage  
-                    document.write(myImage) 
-                    console.log('in snapshot') 
-                  document.getElementById('myform').submit();      
-                }
-                  </script>
+                var Image1 = image.replace(/^data\:image\/\w+\;base64\,/, '');
+                var src = "data:image/jpeg;base64,";
+                src += Image1;
+                image.src = src;
+                console.log(Image1);
+                document.getElementById("myImage").value = src;
+                console.log(myImage);
+                document.getElementById('submitPhoto').click();  
+            }
+        </script>
     
        
      </head>
@@ -54,30 +58,11 @@
                             </div>
                     </div>
                     </div>
-                  
-                    <!-- <div id="load" style="margin:0px auto"></div>
-    <br/>
-  
-    <div style="    text-align: center;
-    /* border: 4px solid black; */
-    background-color: #e8e8e8;
-    color: white;
-    padding: 11px;
-    margin: -4px auto;
-    width: 20%;
-    border-radius: 5px;
-    -webkit-box-shadow: 10px 10px 31px -9px rgba(0,0,0,0.75);
-    -moz-box-shadow: 10px 10px 31px -9px rgba(0,0,0,0.75);
-    box-shadow: 10px 10px 31px -9px rgba(0,0,0,0.75);">
-    </div> -->
 
     <form id="myform" method="post" action="/upload" onsubmit="return take_snapshot()" >
-    <input id="myImage" type="hidden" name="myImage" value="" />    
-    <input type="submit"/> 
+    <input type="hidden" id="myImage" name="myImage" value="AABC" />    
+    <input id="submitPhoto" class="buttonSubmit" type="submit"/> 
 </form>
-<!-- <div id="load" style="margin:0px auto"></div> -->
-                    <!-- /container -->         
-                    <!-- <script src="//code.jquery.com/jquery-1.10.2.min.js"></script> -->
                     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
                     <script src="js/vendor/modernizr.min.js"></script>
                     <script src="js/vendor/bootstrap.min.js"></script>
