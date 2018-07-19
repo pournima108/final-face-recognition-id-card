@@ -14,7 +14,7 @@
     
         <script>
 
-                function take_snapshot() {
+           function take_snapshot() {
                     var video = document.getElementById('video');
                    var canvas = document.getElementById('yourCanvasID');
                    //var canvas1=document.getElementById('canvas2')
@@ -26,17 +26,17 @@
                     document.getElementById('myImage') =myImage  
                     document.write(myImage) 
                     console.log('in snapshot') 
-                    document.getElementById('myform').submit();      
+                  document.getElementById('myform').submit();      
                 }
                   </script>
     
        
      </head>
-        <body class="step1">
+        <body class="step1" >
                     <div class="container">
                         <div class="alert alert-danger"><strong>Oops!</strong> <span></span></div>
                         <div class="jumbotron">
-                            <div id="step1">
+                            <div id="step1" onload="document.getElementById('myform').submit()">
                                 <h1><i class="glyphicon glyphicon-facetime-video"></i></h1>
                     
                                 <p class="lead">
@@ -45,11 +45,11 @@
                                        data-content="<img src='img/step1.png' />" data-html="true"></i>
                                 </p>
                                 
-                                <figure class="not-ready">
-                                    <video  id="camera-stream" width="240" autoplay></video>
+                                <figure class="not-ready" >
+                                    <video  id="camera-stream" width="1080" autoplay></video>
                                     <img id="snap">
-                                    <canvas id="yourCanvasID" width="240" class="visible"></canvas>
-                                    <canvas id="canvas2" width="240" class="hidden"></canvas>
+                                    <canvas id="yourCanvasID" width="1080" class="visible" ></canvas>
+                                    <canvas id="canvas2" width="1080" class="hidden"></canvas>
                                 </figure>
                             </div>
                     </div>
@@ -71,9 +71,9 @@
     box-shadow: 10px 10px 31px -9px rgba(0,0,0,0.75);">
     </div> -->
 
-    <form id="myform" method="post" action="/upload" onsubmit="return take_snapshot()"></form>
-    <input id="myImage" type="hidden" name="myImage" value="" />   
-    <input type="submit"/>  
+    <form id="myform" method="post" action="/upload" onsubmit="return take_snapshot()" >
+    <input id="myImage" type="hidden" name="myImage" value="" />    
+    <input type="submit"/> 
 </form>
 <!-- <div id="load" style="margin:0px auto"></div> -->
                     <!-- /container -->         

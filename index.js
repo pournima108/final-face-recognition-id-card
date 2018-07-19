@@ -143,8 +143,9 @@ app.post('/upload', (req, res) => {
     //res.render('index')
     // console.log(JSON.stringify(req.body) + "hello");
     console.log("upload page" )
-    var data = JSON.stringify(req.body.mydata);
-    var img = req.body.mydata;
+    var data = JSON.stringify(req.body.myImage);
+    var img = req.body.myImage;
+    console.log(data)
 
     var options = {
         method: 'POST',
@@ -161,7 +162,7 @@ app.post('/upload', (req, res) => {
         body = JSON.parse(body);
         // console.log(JSON.stringify(body.images[0].transaction.message));
         if(body.hasOwnProperty('Errors')) {
-            res.render('index', {
+            res.render('index_old', {
                 msg: 'Face not recognized. Please try again',
                 vis: 'visible'
             })

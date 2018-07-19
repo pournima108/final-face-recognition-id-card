@@ -167,7 +167,7 @@
   
       // Make a copy of the current frame in the video on the canvas.
       context.drawImage(video, 0, 0, width, height);
-  
+      console.log("SNAPSHOT DATA "+hidden_canvas.toDataURL('image/png'));
       // Turn the canvas image into a dataURL that can be used as a src for our photo.
       return hidden_canvas.toDataURL('image/png');
     }
@@ -194,8 +194,11 @@
     tracker.on('track', function (event) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      console.log("__"+canvas.toDataURL());
+
       event.data.forEach(function (rect) {
-          console.log("Face Traced");
+         
+        console.log("Face Tracked");
 
           var video = document.querySelector('#camera-stream');
           //var image = document.querySelector('#snap');
