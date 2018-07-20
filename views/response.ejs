@@ -13,14 +13,9 @@
 
   <script>
       function printDiv() {
-          // document.getElementById('myForm').submit();
-          //var printContents = document.getElementById(divName).innerHTML;
-          // var originalContents = document.body.innerHTML;
-          // document.body.innerHTML = printContents;
 
           setTimeout(function()
           {
-              //window.print();
               var toPrint = document.getElementById('printarea');
 
               var popupWin = window.open('', '_blank', 'width=550,height=550,location=no,left=200px');
@@ -36,27 +31,7 @@
               popupWin.document.close();
           },
           8000)
-
-          // document.body.innerHTML = originalContents;
-
-          // document.getElementById('profile-card').style.visibility = 'hidden';
-          // document.print();
-          // return true;
-
-          //printToHTML();
-          // var printContents = document.getElementById(divName).innerHTML;
-          // // var originalContents = document.body.innerHTML;
-          // // document.body.innerHTML = printContents;
-          // setTimeout(function()
-          // {
-          //     //printDiv('printMe')
-          //     window.print();
-          // },
-          // 8000)
-
-          // document.body.innerHTML = originalContents;
       }
-
   </script>
 </head>
 
@@ -84,20 +59,17 @@
           It takes monumental improvement for us to change how we live our lives. Design is the way we access that improvement.
         </p> -->
         <table style="text-align:left;">
-          <!-- <input type="hidden" name="mobileno" value="<%= details.employeedetails[0].mobileno %>"/> -->
           <tr>
             <td><b>Phone<b></td>
             <td>&emsp;:&emsp;</td>
             <td><%= details.employeedetails[0].mobileno %></td>
           </tr>
           <tr>
-            <!-- <input type="hidden" name="mobileno" value="<%= details.employeedetails[0].mobileno %>"/> -->
             <td><b>Company</b></td>
             <td>&emsp;:&emsp;</td>
             <td>Hexaware</td>
           </tr>
           <tr>
-            <!-- <input type="hidden" name="department" value="<%= details.employeedetails[0].department %>"/> -->
             <td><b>Department</b></td>
             <td>&emsp;:&emsp;</td>
             <td><%= details.employeedetails[0].department %></td>
@@ -113,15 +85,9 @@
       <ul class="profile-social-links">
         <img src="images/logo.png" style="height:50px;">
       </ul>
-      <!-- some social links to show off -->
-        <!-- <button type="button" class="btn pmd-ripple-effect btn-primary"> Primary </button > -->
+
     </aside>
-    <!-- <button type="button" class="btn pmd-ripple-effect btn-primary"> Primary </button > -->
-    <!--Primary button with a ripple effect-->
-    <!-- <button type="button" class="btn pmd-ripple-effect btn-primary"> Primary </button >
-    <div class='printButton' style="background-color: rgba(26, 21, 21, 0.94);padding:2px">
-        <button onclick="printDiv('printMe')"  style="background-color: rgba(60, 38, 0, 0.845);color:white">PRINT</button>
-    </div> -->
+    
   </body>
 
 </html>
