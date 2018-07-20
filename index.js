@@ -129,6 +129,16 @@ app.post('/enroll',(req,res)=> {
     var subject_id=req.body.employeeid;
     // console.log(subject_id)
     //console.log(subjectid);
+    var i;
+    var data1 = [];
+    
+    for (i=0;i<detailsArray.employeeDetails.length;i++){
+        data1.push(detailsArray.employeeDetails[i].employeeid)
+        console.log(data1)
+
+    }
+    
+    // console.log(detailsArray.employeeDetails[i].employeeid)
     var options1 ={
         method:'POST',
         url: 'https://api.kairos.com/enroll',
@@ -141,6 +151,9 @@ app.post('/enroll',(req,res)=> {
     };
     request(options1,function(error,response,body) {
         console.log("Response Body : " + JSON.stringify(body));
+        // console.log(JSON.parse(body).images[0].transaction.subject_id)
+        // console.log(detailsArray.employeeDetails[0].employeeid)
+        
         if (JSON.parse(body) === "Authentication failed") {
             res.render('frontpage')
         }
@@ -151,35 +164,42 @@ app.post('/enroll',(req,res)=> {
                 vis: 'visible'
             })
         }
-        else if(detailsArray.employeeDetails.employeeid != subject_id){
-            var subject =subject_id;
-            console.log(subject)
-            console.log("no subject id matched")
-            res.render('noDetailsAvailable',{
-                subject:subject
-            })
+        else if(JSON.parse(body).images[0].transaction.subject_id != null) {
+            var subjectid=JSON.parse(body).images[0].transaction.subject_id 
+            // console.log(data)
+            console.log(subjectid)
+            if(data1.includes(subjectid)){
+                detailsArray.employeeDetails.forEach((element) =>{
+                    if(element.employeeid == subject_id){
+                        var today = new Date();
+                        var dd = today.getDate();
+                        var mm = today.getMonth()+1; //January is 0!
+                        var yyyy = today.getFullYear();
+                        today = dd + '/' + mm + '/' + yyyy;
+                        res.render('fillingConfirmation',{
+                            details:element,
+                            image:data
+                        })
+                    }
+                 
+                })      
+            }
+            else{
+                var subject =subject_id;
+                console.log(subject)
+                console.log("no subject id matched")
+                res.render('noDetailsAvailable',{
+                    subject:subject,
+                    image:data
+                })
+            }
+          
         }
-        else {
-            //console.log(body.images[0].transaction.subject_id);
-        //    console.log("correct data")
-            detailsArray.employeeDetails.forEach((element) => {
-            if(element.employeeid == subject_id) {
-                    var today = new Date();
-                    var dd = today.getDate();
-                    var mm = today.getMonth()+1; //January is 0!
-                    var yyyy = today.getFullYear();
-                    today = dd + '/' + mm + '/' + yyyy;
-                    res.render('fillingConfirmation',{
-                        details:element,
-                        image:data
-                    })
 
-        }
     })
 
 }
-})
-})
+)  
 
 
 app.post('/upload', (req, res) => {

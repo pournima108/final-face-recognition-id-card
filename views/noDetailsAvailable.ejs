@@ -45,13 +45,23 @@
                 </div>
             </div>
         </div>
-
+    
          <!--HERO CONTENT ****************************************************************************************-->
 
          <div class="container align-self-center py-5"  >
                 <div class="align-items-center text-center">
                   <div class="text-center" >
-            <h1>Hi <%=subject %>  it seems your data is not available</h1>
+                        <div class="row">
+                                <div class="col-md-12">
+                                <div class="text-center align-items-center">
+                                  <img src="<%= image %>" style="height:200px; width:200px; border: 15px solid white; border-radius: 50%" >
+                                </div>
+                              </div>
+                            </div>
+                            <br>
+
+            <h3>Hi <%=subject %>  it looks like your data is not available.</h3>
+            <h3>Please talk to a representative and we will get you sorted</h3>
             <form id="myform" name="myform" action="/detrain"  method="post"  >
                 <input id="employeeData"  name="employeeData" type="hidden" value="AABC"/>
                 <input id ="submitPhoto" class="buttonSubmit" type="submit" />
