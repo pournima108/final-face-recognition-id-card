@@ -5,38 +5,62 @@
   <title>Hexaware ID Card Generator</title>
   <!-- Compiled and minified CSS -->
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css"> -->
-<link rel="stylesheet" href="js/cardify.css">
+  <link rel="stylesheet" href="js/cardify.css">
   <!-- Compiled and minified JavaScript -->
 
-
   <script>
-      function printDiv(divName) {
+      function printDiv() {
           // document.getElementById('myForm').submit();
-          var printContents = document.getElementById(divName).innerHTML;
+          //var printContents = document.getElementById(divName).innerHTML;
           // var originalContents = document.body.innerHTML;
           // document.body.innerHTML = printContents;
-          window.print();
+
+          setTimeout(function()
+          {
+              //window.print();
+              var toPrint = document.getElementById('printarea');
+
+              var popupWin = window.open('', '_blank', 'width=550,height=550,location=no,left=200px');
+
+              popupWin.document.open();
+
+              popupWin.document.write('<html><title>::Preview::</title><link rel="stylesheet" type="text/css" href="print.css" /></head><body onload="window.print()">')
+
+              popupWin.document.write(toPrint.innerHTML);
+
+              popupWin.document.write('</html>');
+
+              popupWin.document.close();
+          },
+          8000)
+
+          // document.body.innerHTML = originalContents;
+
+          // document.getElementById('profile-card').style.visibility = 'hidden';
+          // document.print();
+          // return true;
+
+          //printToHTML();
+          // var printContents = document.getElementById(divName).innerHTML;
+          // // var originalContents = document.body.innerHTML;
+          // // document.body.innerHTML = printContents;
+          // setTimeout(function()
+          // {
+          //     //printDiv('printMe')
+          //     window.print();
+          // },
+          // 8000)
+
           // document.body.innerHTML = originalContents;
       }
 
   </script>
-  <!-- <script type="text/javascript">
-
-        $(document).ready( function() {
-
-          setTimeout(function()
-          {
-              printDiv('printMe')
-          },
-          8000)
-        });
-        </script> -->
 </head>
 
-<body>
+<body onLoad="printDiv()" id="printarea">
 
     <aside class="profile-card">
       <header>
@@ -92,7 +116,7 @@
       <!-- some social links to show off -->
         <!-- <button type="button" class="btn pmd-ripple-effect btn-primary"> Primary </button > -->
     </aside>
-    <button type="button" class="btn pmd-ripple-effect btn-primary"> Primary </button >
+    <!-- <button type="button" class="btn pmd-ripple-effect btn-primary"> Primary </button > -->
     <!--Primary button with a ripple effect-->
     <!-- <button type="button" class="btn pmd-ripple-effect btn-primary"> Primary </button >
     <div class='printButton' style="background-color: rgba(26, 21, 21, 0.94);padding:2px">
