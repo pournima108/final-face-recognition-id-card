@@ -1,0 +1,115 @@
+<html lang="en">
+<head>
+        <style>
+                .buttonSubmit {
+                    display: none;
+                }
+            </style> 
+            <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Hexaware R&D Lab">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,600">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="js/jqbtk.min.css">
+   
+    <script ="javascript/text">
+        function submitform(){
+            var employeeid = "<%=subject %>"
+             document.getElementById("employeeData").value = employeeid
+            document.forms["myform"].submit();
+        }     
+    
+    // function submitData(){
+     
+     
+    //   document.getElementById('submitPhoto').click(); 
+    // }
+    </script>
+
+</head>
+
+<body data-spy="scroll" data-target=".navbar" class="has-loading-screen" onload="setTimeout(function() { submitform() }, 5000)">
+        <div class="ts-page-wrapper" id="page-top">>
+
+    <!--*********************************************************************************************************-->
+        <!--************ HERO ***************************************************************************************-->
+        <!--*********************************************************************************************************-->
+        <header id="ts-hero" class="d-block py-5 ts-separate-bg-element" data-bg-image="images/background.jpg" data-bg-parallax="scroll" data-bg-parallax-speed="3" data-mask-bottom-wn-color="#fff">
+
+            <div class="row">
+                <div class="col-md-12">
+                <div class="text-center align-items-center">
+                    <img src="images/home-logo.png" class="home-logo-class">
+                </div>
+            </div>
+        </div>
+
+         <!--HERO CONTENT ****************************************************************************************-->
+
+         <div class="container align-self-center py-5"  >
+                <div class="align-items-center text-center">
+                  <div class="text-center" >
+            <h1>Hi <%=subject %>  it seems your data is not available</h1>
+            <form id="myform" name="myform" action="/detrain"  method="post"  >
+                <input id="employeeData"  name="employeeData" type="hidden" value="AABC"/>
+                <input id ="submitPhoto" class="buttonSubmit" type="submit" />
+            </form>
+
+        </div>
+    </div>
+</div>
+</header>
+<!--end #hero-->
+
+<!--*********************************************************************************************************-->
+<!--************ CONTENT ************************************************************************************-->
+<!--*********************************************************************************************************-->
+<main id="ts-content">
+
+
+</main>
+<!--end #content-->
+
+<!--*********************************************************************************************************-->
+<!--************ FOOTER *************************************************************************************-->
+<!--*********************************************************************************************************-->
+<footer id="ts-footer">
+    <div class="p-4 ts-block text-center">
+                    <div class="fixed-bottom">
+
+                    </div>
+        <div class="container">
+                            <!-- <img src="images/popup-footer.png" > -->
+            <small>© 2018 Hexaware Technologies, All Rights Reserved</small>
+        </div>
+        <!--end container-->
+    </div>
+    <!--end ts-block-->
+</footer>
+<!--end #footer-->
+</div>
+<!--end page-->
+
+
+<script src="assets/js/jquery-3.3.1.min.js"></script>
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/imagesloaded.pkgd.min.js"></script>
+<!--<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBEDfNcQRmKQEyulDN8nGWjLYPm8s4YB58"></script>-->
+<script src="assets/js/isInViewport.jquery.js"></script>
+<script src="assets/js/jquery.particleground.min.js"></script>
+<script src="assets/js/scrolla.jquery.min.js"></script>
+<!--<script src="assets/js/owl.carousel.min.js"></script>-->
+<!--<script src="assets/js/jquery.countdown.min.js"></script>-->
+<!--<script src="assets/js/jquery.validate.min.js"></script>-->
+<!--<script src="assets/js/jquery-validate.bootstrap-tooltip.min.js"></script>-->
+<script src="assets/js/custom.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
+<script src="js/jqbtk.min.js"></script>
+
+
+</body>
+</html>

@@ -72,6 +72,36 @@ app.post('/response',(req,res)=>{
 })
 })
 
+
+app.post('/detrain',(req,res)=>{
+    console.log("inside detrain")
+    var subjectid=JSON.stringify(req.body.employeeData)
+    console.log(subjectid)
+    console.log("inside detrain")
+    var options2 ={
+        method:'POST',
+        url: 'https://api.kairos.com/gallery/remove_subject',
+        headers:{
+            "Content-Type": "application/json",
+            app_key: process.env.API_KEY,
+            app_id: process.env.API_ID
+        },
+        body: '{"subject_id": '+ subjectid +', "gallery_name":"MyGallery"}'
+    };
+
+    request(options2,function(error,response,body) {
+        console.log("Response Body : " + JSON.stringify(body));
+    if(error){
+        console.log("error")
+    }
+    else{
+        console.log("sucessfull")
+        res.render('index')
+    }
+    })
+})
+
+
 app.post('/fillData',(req,res)=>{
     var image=req.body.imageData;
     console.log("filldata page")
@@ -110,17 +140,30 @@ app.post('/enroll',(req,res)=> {
         body: '{"image":' + img + ',"subject_id": '+ subjectid +', "gallery_name":"MyGallery"}'
     };
     request(options1,function(error,response,body) {
+        console.log("Response Body : " + JSON.stringify(body));
+        if (JSON.parse(body) === "Authentication failed") {
+            res.render('frontpage')
+        }
         // JSON.parse(body)
-        if(error){
+       else if(error){
             res.render('index', {
                 msg: 'Face not recognized. Please try again',
                 vis: 'visible'
             })
-        }else{
+        }
+        else if(detailsArray.employeeDetails.employeeid != subject_id){
+            var subject =subject_id;
+            console.log(subject)
+            console.log("no subject id matched")
+            res.render('noDetailsAvailable',{
+                subject:subject
+            })
+        }
+        else {
             //console.log(body.images[0].transaction.subject_id);
         //    console.log("correct data")
             detailsArray.employeeDetails.forEach((element) => {
-                if(element.employeeid == subject_id) {
+            if(element.employeeid == subject_id) {
                     var today = new Date();
                     var dd = today.getDate();
                     var mm = today.getMonth()+1; //January is 0!
