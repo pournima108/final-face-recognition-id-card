@@ -164,6 +164,27 @@ app.post('/enroll',(req,res)=> {
                 vis: 'visible'
             })
         }
+      else if(error.status ==5000 || error.status ==5001 || error.status ==5002 || error.status ==5003 || error.status ==5004){
+          res.render('index_old',{
+            msg: 'Face not recognized .Please start again ',
+            vis: 'visible',
+          })
+
+      }
+      else if(error.status ==1000 || error.status ==1001 || error.status ==1002 || error.status ==1003 || error.status ==1004){
+        res.render('index',{
+          msg: 'Face not recognized .Please start again ',
+          vis: 'visible',
+        })
+
+    }
+    else if(error.status ==3000 || error.status ==3001 || error.status ==3002 || error.status ==3003 || error.status ==3004){
+        res.render('index',{
+          msg: 'Face not recognized .Please start again ',
+          vis: 'visible',
+        })
+
+    }
         else if(JSON.parse(body).images[0].transaction.subject_id != null) {
             var subjectid=JSON.parse(body).images[0].transaction.subject_id 
             // console.log(data)
@@ -240,7 +261,29 @@ app.post('/upload', (req, res) => {
                 vis: 'visible'
             })
         // } else if(body.images[0].transaction.message == 'no match found'){
-        } else if(Array.isArray(JSON.parse(body).images) && JSON.parse(body).images[0].transaction.message === "no match found"){
+        }
+        else if(error.status ==5000 || error.status ==5001 || error.status ==5002 || error.status ==5003 || error.status ==5004){
+            res.render('index_old',{
+              msg: 'Face not recognized .Please start again ',
+              vis: 'visible',
+            })
+  
+        }
+        else if(error.status ==1000 || error.status ==1001 || error.status ==1002 || error.status ==1003 || error.status ==1004){
+          res.render('index',{
+            msg: 'Face not recognized .Please start again ',
+            vis: 'visible',
+          })
+  
+      }
+      else if(error.status ==3000 || error.status ==3001 || error.status ==3002 || error.status ==3003 || error.status ==3004){
+          res.render('index',{
+            msg: 'Face not recognized .Please start again ',
+            vis: 'visible',
+          })
+  
+      }
+         else if(Array.isArray(JSON.parse(body).images) && JSON.parse(body).images[0].transaction.message === "no match found"){
             res.render('fillData',{
                 msg: 'Face not recognized .Please fill the data',
                 vis: 'visible',
