@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var app = express();
 var request = require("request");
 var ejs = require("ejs");
+var smsModule =require('func')
 
 var detailsArray = require('./emp.json');
 require('dotenv').config()
@@ -76,6 +77,39 @@ app.post('/response',(req,res)=>{
 })
 })
 
+
+app.post('/smsHandler',(req,res)=>{
+    var image=req.body.imageData;
+    var employeeid=req.body.employeeid
+    var sendmsg=smsModule.sendSms();
+    if(message.status==sent){
+        res.render('otpPage',{
+            image:image,
+            employeeid:employeeid,
+        })     
+    }
+    
+})
+,
+app.post('/otpHandler',(req,res)=>{
+    var otp=req.body.otp;
+    var image =req.body.image;
+    var subject_id=req.body.employeeid
+    if (otp==546700){
+        detailsArray.employeeDetails.forEach((element) => {
+            if(element.employeeid == subject_id) {
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth()+1; //January is 0!
+                var yyyy = today.getFullYear();
+                today = dd + '/' + mm + '/' + yyyy;
+                // var img = new Buffer(data, 'base64');
+        
+        res.render('response',{
+
+        })
+    }
+})
 
 app.post('/detrain',(req,res)=>{
     console.log("inside detrain")
