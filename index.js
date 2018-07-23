@@ -31,6 +31,10 @@ app.use(bodyParser.urlencoded({extended: true}));
  * Routing to routes.js file
  */
 // app.use('/', route);
+
+
+
+
 app.get('/', (req, res) => {
     res.render('index');
 })
@@ -76,7 +80,7 @@ app.post('/response',(req,res)=>{
 app.post('/detrain',(req,res)=>{
     console.log("inside detrain")
     var subjectid=JSON.stringify(req.body.employeeData)
-    console.log(subjectid)
+    // console.log(subjectid)
     console.log("inside detrain")
     var options2 ={
         method:'POST',
@@ -134,7 +138,7 @@ app.post('/enroll',(req,res)=> {
     
     for (i=0;i<detailsArray.employeeDetails.length;i++){
         data1.push(detailsArray.employeeDetails[i].employeeid)
-        console.log(data1)
+        // console.log(data1)
 
     }
     
@@ -150,7 +154,7 @@ app.post('/enroll',(req,res)=> {
         body: '{"image":' + img + ',"subject_id": '+ subjectid +', "gallery_name":"MyGallery"}'
     };
     request(options1,function(error,response,body) {
-        console.log("Response Body : " + JSON.stringify(body));
+        // console.log("Response Body : " + JSON.stringify(body));
         // console.log(JSON.parse(body).images[0].transaction.subject_id)
         // console.log(detailsArray.employeeDetails[0].employeeid)
         
@@ -159,36 +163,37 @@ app.post('/enroll',(req,res)=> {
         }
         // JSON.parse(body)
        else if(error){
+           console.log(error)
             res.render('index', {
                 msg: 'Face not recognized. Please try again',
                 vis: 'visible'
             })
         }
-      else if(error.status ==5000 || error.status ==5001 || error.status ==5002 || error.status ==5003 || error.status ==5004){
-          res.render('index_old',{
-            msg: 'Face not recognized .Please start again ',
-            vis: 'visible',
-          })
+    //   else if(error.status ==5000 || error.status ==5001 || error.status ==5002 || error.status ==5003 || error.status ==5004){
+    //       res.render('index_old',{
+    //         msg: 'Face not recognized .Please start again ',
+    //         vis: 'visible',
+    //       })
 
-      }
-      else if(error.status ==1000 || error.status ==1001 || error.status ==1002 || error.status ==1003 || error.status ==1004){
-        res.render('index',{
-          msg: 'Face not recognized .Please start again ',
-          vis: 'visible',
-        })
+    //   }
+    //   else if(error.status ==1000 || error.status ==1001 || error.status ==1002 || error.status ==1003 || error.status ==1004){
+    //     res.render('index',{
+    //       msg: 'Face not recognized .Please start again ',
+    //       vis: 'visible',
+    //     })
 
-    }
-    else if(error.status ==3000 || error.status ==3001 || error.status ==3002 || error.status ==3003 || error.status ==3004){
-        res.render('index',{
-          msg: 'Face not recognized .Please start again ',
-          vis: 'visible',
-        })
+    // }
+    // else if(error.status ==3000 || error.status ==3001 || error.status ==3002 || error.status ==3003 || error.status ==3004){
+    //     res.render('index',{
+    //       msg: 'Face not recognized .Please start again ',
+    //       vis: 'visible',
+    //     })
 
-    }
+    // }
         else if(JSON.parse(body).images[0].transaction.subject_id != null) {
             var subjectid=JSON.parse(body).images[0].transaction.subject_id 
             // console.log(data)
-            console.log(subjectid)
+            // console.log(subjectid)
             if(data1.includes(subjectid)){
                 detailsArray.employeeDetails.forEach((element) =>{
                     if(element.employeeid == subject_id){
@@ -207,7 +212,7 @@ app.post('/enroll',(req,res)=> {
             }
             else{
                 var subject =subject_id;
-                console.log(subject)
+                // console.log(subject)
                 console.log("no subject id matched")
                 res.render('noDetailsAvailable',{
                     subject:subject,
@@ -229,7 +234,7 @@ app.post('/upload', (req, res) => {
     console.log("upload page" )
     var data = JSON.stringify(req.body.myImage);
     var img = req.body.myImage;
-    console.log(data)
+    // console.log(data)
 
     var options = {
         method: 'POST',
@@ -251,7 +256,7 @@ app.post('/upload', (req, res) => {
         // console.log(body.images instanceof Array);
         // console.log(Array.isArray(JSON.parse(body).images));
 
-        console.log("Response Body : " + JSON.stringify(body));
+        // console.log("Response Body : " + JSON.stringify(body));
         // console.log(JSON.stringify(body.images[0].transaction.message));
         if (JSON.parse(body) === "Authentication failed") {
             res.render('frontpage')
@@ -262,27 +267,27 @@ app.post('/upload', (req, res) => {
             })
         // } else if(body.images[0].transaction.message == 'no match found'){
         }
-        else if(error.status ==5000 || error.status ==5001 || error.status ==5002 || error.status ==5003 || error.status ==5004){
-            res.render('index_old',{
-              msg: 'Face not recognized .Please start again ',
-              vis: 'visible',
-            })
+    //     else if(error.status ==5000 || error.status ==5001 || error.status ==5002 || error.status ==5003 || error.status ==5004){
+    //         res.render('index_old',{
+    //           msg: 'Face not recognized .Please start again ',
+    //           vis: 'visible',
+    //         })
   
-        }
-        else if(error.status ==1000 || error.status ==1001 || error.status ==1002 || error.status ==1003 || error.status ==1004){
-          res.render('index',{
-            msg: 'Face not recognized .Please start again ',
-            vis: 'visible',
-          })
+    //     }
+    //     else if(error.status ==1000 || error.status ==1001 || error.status ==1002 || error.status ==1003 || error.status ==1004){
+    //       res.render('index',{
+    //         msg: 'Face not recognized .Please start again ',
+    //         vis: 'visible',
+    //       })
   
-      }
-      else if(error.status ==3000 || error.status ==3001 || error.status ==3002 || error.status ==3003 || error.status ==3004){
-          res.render('index',{
-            msg: 'Face not recognized .Please start again ',
-            vis: 'visible',
-          })
+    //   }
+    //   else if(error.status ==3000 || error.status ==3001 || error.status ==3002 || error.status ==3003 || error.status ==3004){
+    //       res.render('index',{
+    //         msg: 'Face not recognized .Please start again ',
+    //         vis: 'visible',
+    //       })
   
-      }
+    //   }
          else if(Array.isArray(JSON.parse(body).images) && JSON.parse(body).images[0].transaction.message === "no match found"){
             res.render('fillData',{
                 msg: 'Face not recognized .Please fill the data',
@@ -290,9 +295,10 @@ app.post('/upload', (req, res) => {
                 details:req.body,
                 image :img
             })
-        } else {
+        }
+     else {
             // console.log(JSON.stringify(body) + "Response");
-            console.log(JSON.parse(body).images[0].transaction.subject_id);
+            // console.log(JSON.parse(body).images[0].transaction.subject_id);
             subject_id = JSON.parse(body).images[0].transaction.subject_id;
             detailsArray.employeeDetails.forEach((element) => {
                 if(element.employeeid == subject_id) {
