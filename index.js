@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var app = express();
 var request = require("request");
 var ejs = require("ejs");
-var smsModule =require('func')
+var smsModule =require('./func')
 
 var detailsArray = require('./emp.json');
 require('dotenv').config()
@@ -110,6 +110,7 @@ app.post('/otpHandler',(req,res)=>{
         })
     }
 })
+    }})
 
 app.post('/detrain',(req,res)=>{
     console.log("inside detrain")
