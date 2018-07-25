@@ -83,13 +83,13 @@ class Tracker{
 // var currentdate = moment(new Date).format("DD.MM.YYYY");
 // console.log(currentdate);
 
-data={
-    empid:"36022",
-    date:moment("24.07.2018", "DD.MM.YYYY").format("DD.MM.YYYY")
-}
+// data={
+//     empid:"36022",
+//     date:moment("24.07.2018", "DD.MM.YYYY").format("DD.MM.YYYY")
+// }
 // dd + '/' + mm + '/' + yyyy;
 // console.log(data);
-var trac = new  Tracker();
+// var trac = new  Tracker();
 // console.log(data.date);
 // trac.recordDefaulter(data); 
 
@@ -100,4 +100,4 @@ var trac = new  Tracker();
 //         console.log(data);
 //     }
 // });
-// module.exports = Tracker;
+module.exports = Tracker;
