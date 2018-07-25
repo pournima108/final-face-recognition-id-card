@@ -2,10 +2,12 @@ var express = require('express');
 var fs = require('fs');
 // var morgan = require('morgan');
 var bodyParser = require('body-parser');
+var moment = require('moment');
 var app = express();
 var request = require("request");
 var ejs = require("ejs");
-var smsModule =require('./func')
+// var smsModule =require('./func')/
+var messenger= require('./func')
 
 var detailsArray = require('./emp.json');
 require('dotenv').config()
@@ -62,10 +64,12 @@ app.post('/response',(req,res)=>{
         if(element.employeeid == subjectid) {
             //console.log(element.employeeid)
             var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth()+1; //January is 0!
-            var yyyy = today.getFullYear();
-            today = dd + '/' + mm + '/' + yyyy;
+            var formatted = moment(today).format('D MMMM YYYY');
+            today =formatted
+            // var dd = today.getDate();
+            // var mm = today.getMonth()+1; //January is 0!
+            // var yyyy = today.getFullYear();
+            // today = dd-mm-yyyy;
     console.log("response page");
     res.render('response', {
         msg:'response page',
@@ -79,33 +83,44 @@ app.post('/response',(req,res)=>{
 
 
 app.post('/smsHandler',(req,res)=>{
-    var image=req.body.imageData;
-    var employeeid=req.body.employeeid
-    var sendmsg=smsModule.sendSms();
-    if(message.status==sent){
-        res.render('otpPage',{
-            image:image,
-            employeeid:employeeid,
-        })     
-    }
+    var imageData=req.body.imageData;
+    var employeeid=req.body.employeeid;
+    
+    new messenger().sendSms((message)=>{
+        // console.log(message)
+        // console.log(message.status)
+        if(message.status == "queued"){
+            res.render('otpPage',{
+                imageData:imageData,
+                employeeid:employeeid,
+                message:message
+            })     
+        }
+
+    })
     
 })
 ,
 app.post('/otpHandler',(req,res)=>{
     var otp=req.body.otp;
-    var image =req.body.image;
+    var image =req.body.imageData;
     var subject_id=req.body.employeeid
     if (otp==546700){
         detailsArray.employeeDetails.forEach((element) => {
             if(element.employeeid == subject_id) {
                 var today = new Date();
-                var dd = today.getDate();
-                var mm = today.getMonth()+1; //January is 0!
-                var yyyy = today.getFullYear();
-                today = dd + '/' + mm + '/' + yyyy;
+                var formatted = moment(today).format('D MMMM YYYY');
+                today =formatted
+                // var dd = today.getDate();
+                // var mm = today.getMonth()+1; //January is 0!
+                // var yyyy = today.getFullYear();
+                // today = dd-mm-yyyy;
                 // var img = new Buffer(data, 'base64');
         
         res.render('response',{
+            image:image,
+            details:element,
+            date:today
 
         })
     }
@@ -144,9 +159,15 @@ app.post('/detrain',(req,res)=>{
 app.post('/fillData',(req,res)=>{
     var image=req.body.imageData;
     console.log("filldata page")
-    res.render('fillData',{
-        image:image
+    new messenger().sendSms((message)=>{
+              
+        if(message.status == "queued"){
+            res.render('fillData',{
+                image:image
+            })
+        }
     })
+    
 })
 
 // app.post('/welcomeCard',(req,res)=>{
@@ -168,6 +189,7 @@ app.post('/enroll',(req,res)=> {
     var subject_id=req.body.employeeid;
     // console.log(subject_id)
     //console.log(subjectid);
+    var otp=req.body.otp;
     var i;
     var data1 = [];
     
@@ -192,6 +214,7 @@ app.post('/enroll',(req,res)=> {
         // console.log("Response Body : " + JSON.stringify(body));
         // console.log(JSON.parse(body).images[0].transaction.subject_id)
         // console.log(detailsArray.employeeDetails[0].employeeid)
+        console.log(JSON.parse(body))
         
         if (JSON.parse(body) === "Authentication failed") {
             res.render('frontpage')
@@ -204,21 +227,20 @@ app.post('/enroll',(req,res)=> {
                 vis: 'visible'
             })
         }
-    //   else if(error.status ==5000 || error.status ==5001 || error.status ==5002 || error.status ==5003 || error.status ==5004){
-    //       res.render('index_old',{
-    //         msg: 'Face not recognized .Please start again ',
-    //         vis: 'visible',
-    //       })
-
-    //   }
-    //   else if(error.status ==1000 || error.status ==1001 || error.status ==1002 || error.status ==1003 || error.status ==1004){
+        else if(JSON.parse(body).hasOwnProperty('Errors[0].ErrCode==5000') || JSON.parse(body).hasOwnProperty('Errors[0].ErrCode==5001')|| JSON.parse(body).hasOwnProperty('Errors[0].ErrCode==5002') || JSON.parse(body).hasOwnProperty('Errors[0].ErrCode==5003') || JSON.parse(body).hasOwnProperty('Errors[0].ErrCode==5004') ||JSON.parse(body).hasOwnProperty('Errors[0].ErrCode==5010')){
+            res.render('index_old',{
+              msg: 'Face not recognized .Please start again ',
+              vis: 'visible',
+            })
+        }
+    //   else if(JSON.parse(body).Errors[0].ErrCode ==1000 || JSON.parse(body).Errors[0].ErrCode ==1001 || JSON.parse(body).Errors[0].ErrCode ==1002 || JSON.parse(body).Errors[0].ErrCode ==1003 || JSON.parse(body).Errors[0].ErrCode ==1004){
     //     res.render('index',{
     //       msg: 'Face not recognized .Please start again ',
     //       vis: 'visible',
     //     })
 
     // }
-    // else if(error.status ==3000 || error.status ==3001 || error.status ==3002 || error.status ==3003 || error.status ==3004){
+    // else if(JSON.parse(body).Errors[0].ErrCode ==3000 || JSON.parse(body).Errors[0].ErrCode ==3001 || JSON.parse(body).Errors[0].ErrCode ==3002 || JSON.parse(body).Errors[0].ErrCode ==3003 || JSON.parse(body).Errors[0].ErrCode ==3004){
     //     res.render('index',{
     //       msg: 'Face not recognized .Please start again ',
     //       vis: 'visible',
@@ -227,23 +249,26 @@ app.post('/enroll',(req,res)=> {
     // }
         else if(JSON.parse(body).images[0].transaction.subject_id != null) {
             var subjectid=JSON.parse(body).images[0].transaction.subject_id 
+           
             // console.log(data)
             // console.log(subjectid)
             if(data1.includes(subjectid)){
                 detailsArray.employeeDetails.forEach((element) =>{
-                    if(element.employeeid == subject_id){
+                    if(element.employeeid == subject_id && otp=="546700"){
                         var today = new Date();
-                        var dd = today.getDate();
-                        var mm = today.getMonth()+1; //January is 0!
-                        var yyyy = today.getFullYear();
-                        today = dd + '/' + mm + '/' + yyyy;
+                        var formatted = moment(today).format('D MMMM YYYY');
+                        today =formatted
+                        // var dd = today.getDate();
+                        // var mm = today.getMonth()+1; //January is 0!
+                        // var yyyy = today.getFullYear();
+                        // today = dd-mm-yyyy;
                         res.render('fillingConfirmation',{
                             details:element,
-                            image:data
-                        })
+                            image:data,
+                            date:today
+                        })               
                     }
-                 
-                })      
+                })   
             }
             else{
                 var subject =subject_id;
@@ -259,8 +284,7 @@ app.post('/enroll',(req,res)=> {
 
     })
 
-}
-)  
+})
 
 
 app.post('/upload', (req, res) => {
@@ -302,28 +326,28 @@ app.post('/upload', (req, res) => {
             })
         // } else if(body.images[0].transaction.message == 'no match found'){
         }
-    //     else if(error.status ==5000 || error.status ==5001 || error.status ==5002 || error.status ==5003 || error.status ==5004){
-    //         res.render('index_old',{
-    //           msg: 'Face not recognized .Please start again ',
-    //           vis: 'visible',
-    //         })
+        else if(JSON.parse(body).hasOwnProperty('Errors[0].ErrCode==5000') || JSON.parse(body).hasOwnProperty('Errors[0].ErrCode==5001')|| JSON.parse(body).hasOwnProperty('Errors[0].ErrCode==5002') || JSON.parse(body).hasOwnProperty('Errors[0].ErrCode==5003') || JSON.parse(body).hasOwnProperty('Errors[0].ErrCode==5004') ||JSON.parse(body).hasOwnProperty('Errors[0].ErrCode==5010')){
+            res.render('index_old',{
+              msg: 'Face not recognized .Please start again ',
+              vis: 'visible',
+            })
+        }
   
-    //     }
-    //     else if(error.status ==1000 || error.status ==1001 || error.status ==1002 || error.status ==1003 || error.status ==1004){
+    //     else if(JSON.parse(body).Errors[0].ErrCode ==1000 || JSON.parse(body).Errors[0].ErrCode ==1001 || JSON.parse(body).Errors[0].ErrCode ==1002 || JSON.parse(body).Errors[0].ErrCode ==1003 || JSON.parse(body).Errors[0].ErrCode ==1004){
     //       res.render('index',{
     //         msg: 'Face not recognized .Please start again ',
     //         vis: 'visible',
     //       })
   
     //   }
-    //   else if(error.status ==3000 || error.status ==3001 || error.status ==3002 || error.status ==3003 || error.status ==3004){
+    //   else if(JSON.parse(body).Errors[0].ErrCode ==3000 || JSON.parse(body).Errors[0].ErrCode ==3001 || JSON.parse(body).Errors[0].ErrCode ==3002 || JSON.parse(body).Errors[0].ErrCode ==3003 || JSON.parse(body).Errors[0].ErrCode ==3004){
     //       res.render('index',{
     //         msg: 'Face not recognized .Please start again ',
     //         vis: 'visible',
     //       })
   
     //   }
-         else if(Array.isArray(JSON.parse(body).images) && JSON.parse(body).images[0].transaction.message === "no match found"){
+         else  if(Array.isArray(JSON.parse(body).images) && JSON.parse(body).images[0].transaction.message === "no match found"){
             res.render('fillData',{
                 msg: 'Face not recognized .Please fill the data',
                 vis: 'visible',
@@ -331,6 +355,7 @@ app.post('/upload', (req, res) => {
                 image :img
             })
         }
+    
      else {
             // console.log(JSON.stringify(body) + "Response");
             // console.log(JSON.parse(body).images[0].transaction.subject_id);
@@ -338,14 +363,17 @@ app.post('/upload', (req, res) => {
             detailsArray.employeeDetails.forEach((element) => {
                 if(element.employeeid == subject_id) {
                     var today = new Date();
-                    var dd = today.getDate();
-                    var mm = today.getMonth()+1; //January is 0!
-                    var yyyy = today.getFullYear();
-                    today = dd + '/' + mm + '/' + yyyy;
+                    var formatted = moment(today).format('D MMMM YYYY');
+                    today =formatted
+                    // var dd = today.getDate();
+                    // var mm = today.getMonth()+1; //January is 0!
+                    // var yyyy = today.getFullYear();
+                    // today = dd-mm-yyyy;
                     // var img = new Buffer(data, 'base64');
                     res.render('welcomeCard',{
                         details:element,
-                        image:img
+                        image:img,
+                        date:today
                     });
                 }
             })

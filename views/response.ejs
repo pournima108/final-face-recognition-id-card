@@ -16,19 +16,13 @@
 
           setTimeout(function()
           {
-              var toPrint = document.getElementById('printarea');
-
-              var popupWin = window.open('', '_blank', 'width=550,height=550,location=no,left=200px');
-
-              popupWin.document.open();
-
-              popupWin.document.write('<html><title>::Preview::</title><link rel="stylesheet" type="text/css" href="print.css" /></head><body onload="window.print()">')
-
-              popupWin.document.write(toPrint.innerHTML);
-
-              popupWin.document.write('</html>');
-
-              popupWin.document.close();
+             var toPrint = document.getElementById('printarea')
+             var popupWin = window.open('', '_blank', 'width=550,height=550,location=no,left=200px');
+             popupWin.document.open();
+             popupWin.document.write('<html><title>::Preview::</title><link rel="stylesheet" type="text/css" href="css/print.css" /></head><body onload="window.print()">')
+             popupWin.document.write(toPrint.innerHTML);
+             popupWin.document.write('</html>');
+             popupWin.document.close();
           },
           8000)
       }
@@ -38,54 +32,57 @@
 <body onLoad="printDiv()" id="printarea">
 
     <aside class="profile-card">
-      <header>
+   
+          <div class="col s12 m7" class="card" id="printMe">
+              <div class="card horizontal">
+        <div class ="card-image">
         <!-- here’s the avatar -->
-
+        <ul class="profile-social-links">
+          <img src="images/logo.png" style="height:50px;">
+        </ul>
           <img src="<%= image %>" class="hoverZoomLink" style="height:100px; width: 100px; border:5px solid #e4e7ff; border-radius:50%">
-
-
-        <!-- the username -->
-        <h1><%= details.employeedetails[0].employeename%></h1>
-
-        <!-- and role or location -->
-        <h2>Emp ID : <%= details.employeeid %></h2>
-
-      </header>
-
-      <!-- bit of a bio; who are you? -->
+        </div>
+        <br>
+<div class="card-stacked">
+  <div class="card-content">
       <div class="profile-bio">
-
-        <!-- <p>
-          It takes monumental improvement for us to change how we live our lives. Design is the way we access that improvement.
-        </p> -->
         <table style="text-align:left;">
-          <tr>
-            <td><b>Phone<b></td>
-            <td>&emsp;:&emsp;</td>
-            <td><%= details.employeedetails[0].mobileno %></td>
-          </tr>
-          <tr>
-            <td><b>Company</b></td>
-            <td>&emsp;:&emsp;</td>
-            <td>Hexaware</td>
-          </tr>
-          <tr>
-            <td><b>Department</b></td>
-            <td>&emsp;:&emsp;</td>
-            <td><%= details.employeedetails[0].department %></td>
-          </tr>
-        </br>
-          <tr>
-            <td><b>Purpose</b></td>
-            <td>&emsp;:&emsp;</td>
-            <td>Temporary ID</td>
-          </tr>
+            <h2>Emp ID : <%= details.employeeid %></h2>
+            <h2><%= details.employeedetails[0].employeename%></h2>
+                <tr>
+                <td><b>Employee id<b></td>
+                <td>&emsp;:&emsp;</td>
+                <td><%= details.employeeid %></td>
+                </tr>
+              <tr>
+              <td><b>Phone<b></td>
+              <td>&emsp;:&emsp;</td>
+              <td><%= details.employeedetails[0].mobileno %></td>
+              </tr>
+              <tr>
+              <td><b>Company</b></td>
+              <td>&emsp;:&emsp;</td>
+              <td>Hexaware</td>
+              </tr>
+              <tr>
+              <td><b>Department</b></td>
+              <td>&emsp;:&emsp;</td>
+              <td><%= details.employeedetails[0].department %></td>
+              </tr>
+              <tr>
+              <td><b>Purpose</b></td>
+              <td>&emsp;:&emsp;</td>
+              <td>Temporary ID</td>
+              </tr>
         </table>
       </div>
-      <ul class="profile-social-links">
-        <img src="images/logo.png" style="height:50px;">
-      </ul>
-
+      <div class="card-action">
+        <a>Validity:</a><span><%= date%></span>
+      </div>
+      </div>
+     </div>
+    </div>
+    </div>
     </aside>
     
   </body>
