@@ -64,6 +64,8 @@ class Tracker{
 
                             callback(null,"yes");
                             break;
+                        }else{
+                            callback(null,"no");
                         }
                     }
 
