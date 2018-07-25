@@ -6,15 +6,19 @@ class Tracker{
     constructor(){
 
         console.log("Defaulter tracker initialized");
-        
+
+    }
+
+    createRegister(){
+
         if (!fs.existsSync("trace")) {
             fs.mkdirSync("trace");
             
             fs.writeFile('trace/trace.json',"[]",(err)=>{
                 if(err){
-                        console.log("error in initializing defaulter list");
+                        console.log("Error in creating register");
                     }else{
-                        console.log("file created");
+                        console.log("Register created");
                     }
             });
 
@@ -23,7 +27,6 @@ class Tracker{
     }
 
     
-
     recordDefaulter(data){
         
         fs.readFile("trace/trace.json",(err,fileData)=>{
