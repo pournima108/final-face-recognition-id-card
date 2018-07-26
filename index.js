@@ -6,7 +6,7 @@ var app = express();
 var request = require("request");
 var ejs = require("ejs");
 var messenger= require('./func')
-
+var checkDefaulter =require('./tracker')
 var detailsArray = require('./emp.json');
 require('dotenv').config()
 // var route = require('./api/routes')
@@ -14,6 +14,7 @@ require('dotenv').config()
 // EJS
 app.set('view engine', 'ejs');
 
+new checkDefaulter().createRegister();
 var port = process.env.PORT || 3000;
 
 app.use(express.static(__dirname));
@@ -53,7 +54,7 @@ app.post('/response',(req,res)=>{
         if(element.employeeid == subjectid) {
             //console.log(element.employeeid)
             var today = new Date();
-            var formatted = moment(today).format('D MMMM YYYY');
+            var formatted = moment(today).format('DD.MMMM.YYYY');
             today =formatted
             console.log("response page");
             res.render('response', {
@@ -94,7 +95,7 @@ app.post('/otpHandler',(req,res)=>{
         detailsArray.employeeDetails.forEach((element) => {
             if(element.employeeid == subject_id) {
                 var today = new Date();
-                var formatted = moment(today).format('D MMMM YYYY');
+                var formatted = moment(today).format('DD.MMMM.YYYY');
                 today =formatted
         res.render('response',{
             image:image,
@@ -210,11 +211,17 @@ app.post('/enroll',(req,res)=> {
         else if(JSON.parse(body).images[0].transaction.subject_id != null) {
             var subjectid=JSON.parse(body).images[0].transaction.subject_id 
             if(data1.includes(subjectid)){
+                var today = new Date();
+                var formatted = moment(today).format('DD.MMMM.YYYY');
+                var record = {
+                    "empId" :subjectid,
+                    "date" : formatted
+                }
+                console.log(JSON.stringify(record))
+                new checkDefaulter().recordDefaulter(record);
                 detailsArray.employeeDetails.forEach((element) =>{
                     if(element.employeeid == subject_id && otp=="546700"){
-                        var today = new Date();
-                        var formatted = moment(today).format('D MMMM YYYY');
-                        today =formatted
+                        today=formatted,
                         res.render('fillingConfirmation',{
                             details:element,
                             image:data,
@@ -243,6 +250,7 @@ app.post('/upload', (req, res) => {
     console.log("upload page" )
     var data = JSON.stringify(req.body.myImage);
     var img = req.body.myImage;
+    // var filterDefaulter =new checkDefaulter().filterRegularDefaulter();
     var options = {
         method: 'POST',
         url: 'https://api.kairos.com/recognize',
@@ -294,13 +302,18 @@ app.post('/upload', (req, res) => {
         }
     
      else {
-            // console.log(JSON.stringify(body) + "Response");
-            // console.log(JSON.parse(body).images[0].transaction.subject_id);
             subject_id = JSON.parse(body).images[0].transaction.subject_id;
+            var today = new Date();
+            var formatted = moment(today).format('D MMMM YYYY');
+            var record = {
+                    "empId" : subject_id,
+                    "date" : formatted
+            }
+            console.log(JSON.stringify(record))
+            new checkDefaulter().recordDefaulter(record);
+            
             detailsArray.employeeDetails.forEach((element) => {
                 if(element.employeeid == subject_id) {
-                    var today = new Date();
-                    var formatted = moment(today).format('D MMMM YYYY');
                     today =formatted
                     res.render('welcomeCard',{
                         details:element,

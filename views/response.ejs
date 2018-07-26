@@ -23,9 +23,15 @@
              popupWin.document.write(toPrint.innerHTML);
              popupWin.document.write('</html>');
              popupWin.document.close();
+             setTimeout(function (){popupWin.close();}, 1000);
           },
           8000)
-      }
+          }  
+          function Redirect() {
+           window.location="http://localhost:3000";
+          }  
+          // document.write("You will be redirected to main page in 10 sec.");
+          setTimeout('Redirect()', 10000);    
   </script>
 </head>
 
@@ -49,11 +55,6 @@
         <table style="text-align:left;">
             <h2>Emp ID : <%= details.employeeid %></h2>
             <h2><%= details.employeedetails[0].employeename%></h2>
-                <tr>
-                <td><b>Employee id<b></td>
-                <td>&emsp;:&emsp;</td>
-                <td><%= details.employeeid %></td>
-                </tr>
               <tr>
               <td><b>Phone<b></td>
               <td>&emsp;:&emsp;</td>
